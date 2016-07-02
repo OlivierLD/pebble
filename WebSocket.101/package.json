@@ -1,0 +1,27 @@
+{
+  "name": "nmea-ws-simulator",
+  "version": "0.0.1",
+  "description": "Pebble watch app/server example using web sockets",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yada-yada/pebble-socket-example.git"
+  },
+  "keywords": [
+    "pebble",
+    "nmea"
+  ],
+  "author": "Olivier LeDiouris",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yada-yada/issues"
+  },
+  "homepage": "https://github.com/yada-yada/pebble-socket-example",
+  "dependencies": {
+    "websocket": "^1.0.23"
+  }
+}
