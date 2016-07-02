@@ -1,6 +1,6 @@
 ## Pebble NMEA app
-![Start here](screenshot.01.png)
-![Choose the channel](screenshot.02.png)
-![Channel list](screenshot.03.png)
-![Hit select](screenshot.04.png)
-![Display](screenshot.05.png)
+![Start here](screenshot.01.png "Start here")
+![Choose the channel](screenshot.02.png "Choose the channel")
+![Channel list](screenshot.03.png "Cahnnel list")
+![Hit select](screenshot.04.png "Hit select")
+![Display](screenshot.05.png "Display")
