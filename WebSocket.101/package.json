@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yada-yada/pebble-socket-example.git"
+    "url": "https://github.com/OlivierLD/pebble.git"
   },
   "keywords": [
     "pebble",
@@ -18,9 +18,9 @@
   "author": "Olivier LeDiouris",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yada-yada/issues"
+    "url": "https://github.com/OlivierLD/pebble/issues"
   },
-  "homepage": "https://github.com/yada-yada/pebble-socket-example",
+  "homepage": https://github.com/OlivierLD/pebble",
   "dependencies": {
     "websocket": "^1.0.23"
   }
