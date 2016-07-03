@@ -7,11 +7,11 @@ Press select to start
 <br/>
 ![Choose the channel](screenshot.02.png "Choose the channel")
 <br/>
-Srcoll
+Srcoll...
 <br/>
 ![Channel list](screenshot.03.png "Channel list")
 <br/>
-Choose
+Choose...
 <br/>
 ![Hit select](screenshot.04.png "Hit select")
 <br/>
