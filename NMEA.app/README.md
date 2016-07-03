@@ -6,23 +6,27 @@
       <br/>
       <img src="screenshot.01.png" alt="Start here">
     </td>
-Press select to start
-<br/>
-![Choose the channel](screenshot.02.png "Choose the channel")
     <td>
-Srcoll...
-<br/>
-![Channel list](screenshot.03.png "Channel list")
+      Press select to start
+      <br/>
+      <img src="screenshot.02.png" alt="Choose the channel">
     </td>
     <td>
-Choose...
-<br/>
-![Hit select](screenshot.04.png "Hit select")
+      Srcoll...
+      <br/>
+      <img src="screenshot.03.png" alt="Channel list">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Choose...
+      <br/>
+      <img src="screenshot.04.png" alt="Hit select">
     </td>
     <td>
-Displayed!
-<br/>
-![Display](screenshot.05.png "Display")
+      Displayed!
+      <br/>
+      <img src="screenshot.05.png" alt="Display">
     </td>
   </tr>
 </table>
