@@ -276,7 +276,7 @@ var nmea = { csp: 0.01, hum: 50, wtemp: 12, sog: 6, bat: 12.0, prmsl: 1013.0, da
 
 var increment = [ 'daylog', 'log' ];
 var angles    = [ 'cog', 'hdg', 'cdr', 'cmg', 'twa', 'twd', 'awa' ];
-var positive  = [ 'bsp', 'bat', 'tws', 'aws', 'dbt', 'csp', 'cog', 'hdg', 'cmg', 'twd', 'cdr' ];
+var positive  = [ 'bsp', 'sog', 'bat', 'tws', 'aws', 'dbt', 'csp', 'cog', 'hdg', 'cmg', 'twd', 'cdr' ];
 
 var fakeData = function() {
   for (var key in nmea) {
