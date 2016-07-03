@@ -2,9 +2,9 @@
 <table>
   <tr>
     <td>
-Application list
-<br/>
-![Start here](screenshot.01.png "Start here")
+      Application list
+      <br/>
+      <img src="screenshot.01.png" alt="Start here">
     </td>
 Press select to start
 <br/>
