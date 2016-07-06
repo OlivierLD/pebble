@@ -1,4 +1,11 @@
 ## Pebble NMEA app
+
+Copy the content of `app.js` in your [CloudPebble](https://cloudpebble.net/ide/) account.
+
+In `app.js`, modify the `wsURI` variable, set the IP address of the WebSocket server.
+
+In the `RESOURCES` section, add the `paperboat.png` file.
+
 <table>
   <tr>
     <td>
