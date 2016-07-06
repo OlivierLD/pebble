@@ -6,14 +6,16 @@
 var UI = require('ui');
 var Vector2 = require('vector2');
 
-var ws = new WebSocket('ws://192.168.1.176:9876');  // TODO Get the URL from a config...
+var wsURI = 'ws://192.168.1.1:9876';   // TODO Get the URL from a config...  ws://192.168.1.176:9876
+
+var ws = new WebSocket(wsURI);
 var selectedChannel;
 
 var main = new UI.Card({
-  title: ' by OlivSoft',
+  title: ' NMEA app',
   icon: 'images/paperboat.png',
-  subtitle: 'NMEA App',
-  body: 'Press SELECT ->\nto start.'
+  subtitle: '',
+  body: 'Listens to ' + wsURI + '\nPress SELECT ->\nto start.\nDOWN for About ->'
 });
 
 main.show();
@@ -100,6 +102,7 @@ ws.onmessage = function (event) {
 /*
  * in the payload, use 'member' to get the value:
  * payload['member'] => payload[channels[index].member].toFixed(channels[index].nbd)
+ * This is an abstraction layer on top of the data returned by the app running on on RasPI.
  */
 var channels = [ { chan: 'BSP',
                    desc: 'Boat Speed',
@@ -245,11 +248,21 @@ dataWind.on('click', 'back', function(e) {
   displayMenu();
 });
 
-
 main.on('click', 'up', function(e) {
   console.log('Main UP');
 });
 
 main.on('click', 'down', function(e) {
   console.log('Main DOWN');
+  var about = new UI.Card({
+    title: ' about OlivSoft',
+    subtitle: '',
+    icon: 'images/paperboat.png',
+    scrollable: true,
+    body: 'Works on WebSockets NMEA Server possibly running onboard, on a Raspberry PI, see http://www.lediouris.net/RaspberryPI/_Articles/readme.html for more details...'
+  });
+  about.on('click', 'back', function(e) {
+    about.hide();
+  });
+  about.show();
 });
