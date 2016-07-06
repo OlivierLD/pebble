@@ -4,7 +4,11 @@ Copy the content of `app.js` in your [CloudPebble](https://cloudpebble.net/ide/)
 
 In `app.js`, modify the `wsURI` variable, set the IP address of the WebSocket server.
 
-In the `RESOURCES` section, add the `paperboat.png` file.
+In the `RESOURCES` section, add the `small.boat.png` file, name it `paperboat.png`, as mentionned in the code.
+
+Then in the `COMPILATION` section, start a build, followed by `INSTALL AND RUN`.
+
+You should be good to go!
 
 <table>
   <tr>
