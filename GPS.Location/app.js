@@ -95,3 +95,12 @@ main.on('accelTap', function(e) {
   Vibe.vibrate('short');
 });
 
+var interval = setInterval(function() {
+  watchId = navigator.geolocation.getCurrentPosition(onPosSuccess, onPosError, options);
+}, 10000);
+
+main.on('click', 'back', function(e) {
+  console.log('Main BACK');
+  clearInterval(interval);
+  main.hide();
+});
