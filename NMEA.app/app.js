@@ -3,10 +3,27 @@
  *
  * For the fonts, see https://developer.pebble.com/blog/2013/07/24/Using-Pebble-System-Fonts/
  */
+var Settings = require('settings'); // See https://pebble.github.io/pebblejs/#settings
 var UI = require('ui');
 var Vector2 = require('vector2');
 
 var wsURI = 'ws://192.168.1.1:9876';   // TODO Get the URL from a config...  ws://192.168.1.176:9876
+
+Settings.config(
+  { url: 'http://lediouris.net/pebble/NMEA.app.html' },
+  function(e) { // OnOpen
+    console.log('opening configurable:', JSON.stringify(e));
+    // Reset wsuri before opening the webview
+    Settings.option({wsuri: wsURI});
+  },
+  function(e) { // OnClose
+    var cfg = Settings.option();
+    console.log('closed configurable:', JSON.stringify(e), JSON.stringify(cfg));
+    if (e.failed === true) {
+      console.log("Failed:" + JSON.stringify(e));
+    }
+  }
+);
 
 var ws = new WebSocket(wsURI);
 var selectedChannel;
