@@ -7,18 +7,22 @@ var Settings = require('settings'); // See https://pebble.github.io/pebblejs/#se
 var UI = require('ui');
 var Vector2 = require('vector2');
 
-var wsURI = 'ws://192.168.1.1:9876';   // TODO Get the URL from a config...  ws://192.168.1.176:9876
+var wsURI = Settings.option('wsuri');
+if (wsURI === undefined) {
+  wsURI = 'ws://192.168.1.1:9876';   // TODO Get the URL from a config...  ws://192.168.1.176:9876
+}
 
 Settings.config(
   { url: 'http://lediouris.net/pebble/NMEA.app.html' },
   function(e) { // OnOpen
     console.log('opening configurable:', JSON.stringify(e));
     // Reset wsuri before opening the webview
-    Settings.option({wsuri: wsURI});
+//  Settings.option({wsuri: wsURI});
+    Settings.option('wsuri', wsURI);
   },
-  function(e) { // OnClose
-    var cfg = Settings.option();
-    console.log('closed configurable:', JSON.stringify(e), JSON.stringify(cfg));
+  function(e) { // OnClose. If the app is running, restart it.
+    wsURI = Settings.option('wsuri');
+    console.log('closed configurable, wsURI:', wsURI);
     if (e.failed === true) {
       console.log("Failed:" + JSON.stringify(e));
     }
