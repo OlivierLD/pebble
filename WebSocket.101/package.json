@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/OlivierLD/pebble/issues"
   },
-  "homepage": https://github.com/OlivierLD/pebble",
+  "homepage": "https://github.com/OlivierLD/pebble",
   "dependencies": {
     "websocket": "^1.0.23"
   }

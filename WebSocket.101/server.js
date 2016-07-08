@@ -1,3 +1,48 @@
+/**
+ * First time:
+ *  $> npm install
+ * Then 
+ *  $> node server.js <options>
+ * Options are:
+ *   -help
+ *   -verbose true|[false]
+ *   -port [9876]
+ * You can also use
+ *  $> npm start
+ * or
+ *  $> npm start -- <options>
+ *
+ * This is mostly a data simulator for NMEA.
+ * It can be used with the Pebble App at https://github.com/OlivierLD/pebble/tree/master/NMEA.app,
+ * or by any app that needs to consume nema data over WbSockets.
+ * data structure looks like this:
+ {
+  "csp": 0.01,
+  "hum": 50,
+  "wtemp": 12,
+  "sog": 6,
+  "bat": 12,
+  "prmsl": 1013,
+  "daylog": 120,
+  "lat": 37.5013,
+  "lng": -122.48091666666667,
+  "cdr": 0,
+  "dbt": 10,
+  "atemp": 19,
+  "bsp": 6,
+  "cmg": 0,
+  "twa": 0,
+  "twd": 0,
+  "tws": 10,
+  "log": 9800,
+  "awa": 0,
+  "hdg": 0,
+  "cog": 0,
+  "aws": 0
+ }
+ *
+ * Usage is:
+ */
 // http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
 "use strict";
 
