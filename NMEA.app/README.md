@@ -42,6 +42,20 @@ You should be good to go!
   </tr>
 </table>
 
+<table>
+  <tr>
+    <td>
+      Configure...
+      <br/>
+      <img src="screenshot.cfg01.jpg" alt="Configuration - 1">
+    </td>
+    <td>
+      Set your WebSocket URI
+      <br/>
+      <img src="screenshot.cfg02.jpg" alt="Configuration - 2">
+    </td>
+  </tr>
+</table>
 This app is a WebSocket client for the application described [here](http://www.lediouris.net/RaspberryPI/_Articles/readme.html).
 
 All the data you want on your wrist, for less that $100!
