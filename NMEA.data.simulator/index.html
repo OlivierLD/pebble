@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>WebSocket NMEA Test Page</title>
+    </head>
+    <body>
+      <div id="nmea">
+      </div>
+    </body>
+    <script>
+        window.onload = function() {
+            var wsUrl = "ws://" + window.location.hostname + ":" + window.location.port + "/";
+            var connection = new WebSocket(wsUrl);
+            connection.onopen = function () {
+              //  connection.send('Ping'); // Send the message 'Ping' to the server
+              console.log("We're in");
+            };
+
+            // Log errors
+            connection.onerror = function (error) {
+                console.log('WebSocket Error ' + error);
+            };
+
+            // Log messages from the server
+            connection.onmessage = function (e) {
+                console.log('Server: ' + e.data);
+                document.getElementById("nmea").innerHTML = '<pre>' + JSON.stringify(JSON.parse(e.data), null, 2) + '</pre>';
+            };
+        };
+    </script>
+</html>

@@ -205,6 +205,9 @@ server.listen(port, function()
 {
   console.log((new Date()) + " Server is listening on port " + port);
   console.log("Connect to [ws://localhost:" + port + "/]");
+  console.log("=======================================================================================");
+  console.log(">>> Try this test page from a ws-enabled browser: http://localhost:" + port + "/data/index.html");
+  console.log("=======================================================================================");
 });
  
 /**
