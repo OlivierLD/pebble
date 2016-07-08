@@ -7,9 +7,9 @@ var Settings = require('settings'); // See https://pebble.github.io/pebblejs/#se
 var UI = require('ui');
 var Vector2 = require('vector2');
 
-var wsURI = Settings.option('wsuri');
+var wsURI = Settings.option('wsuri'); // Get the URL from a config...  ws://192.168.1.176:9876
 if (wsURI === undefined) {
-  wsURI = 'ws://192.168.1.1:9876';   // TODO Get the URL from a config...  ws://192.168.1.176:9876
+  wsURI = 'ws://192.168.1.1:9876';
 }
 
 Settings.config(
