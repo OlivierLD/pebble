@@ -51,7 +51,7 @@ var verbose = false;
 var port = 9876;
 
 // Optional. You will see this name in eg. 'ps' or 'top' command
-process.title = 'node-nmea';
+process.title = 'nmea-ws-simulator';
 
 console.log("For help, run: node " + __filename + " -help");
 for (var i=0; i<process.argv.length; i++) {
