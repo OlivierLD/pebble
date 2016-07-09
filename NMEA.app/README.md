@@ -2,8 +2,9 @@
 
 Copy the content of `app.js` in your [CloudPebble](https://cloudpebble.net/ide/) account.
 
-To use the `Config` feature, deploy the `NMEA.app.html` to some web server you can reach, and mention its
-url in `url` member of the parameter sent to the `Settings.config` function in `app.js`.
+The config page `NMEA.app.html` is already deployed.
+You can modify this page, and deploy it to your own server. Just make sure its url is mentioned 
+in the `url` member of the parameter sent to the `Settings.config` function in `app.js`.
 
 Configuring the app requires Internet access, make sure you configure it when you have some.
 Typically here, this app is designed to be used on board, when Internet access can be questionable.
