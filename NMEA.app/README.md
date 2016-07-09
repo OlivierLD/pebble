@@ -63,5 +63,6 @@ You should be good to go!
   </tr>
 </table>
 This app is a WebSocket client for the application described [here](http://www.lediouris.net/RaspberryPI/_Articles/readme.html).
+There is also a simulator in this very project, see [here](https://github.com/OlivierLD/pebble/tree/master/NMEA.data.simulator).
 
 All the data you want on your wrist, for less that $100!
