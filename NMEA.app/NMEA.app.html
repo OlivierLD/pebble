@@ -18,7 +18,8 @@
 
         <div data-role="fieldcontain">
           <label for="wsuri">NMEA Server WS Uri:</label>
-          <input type="text" size="40" name="wsuri" id="wsuri"></input>
+          <br/>
+          <input type="text" size="40" name="wsuri" id="wsuri" placeholder="ws://machine:port/"></input>
         </div>
 
         <div class="ui-body ui-body-b">
@@ -28,7 +29,7 @@
           </fieldset>
         </div>
       </div>
-      <div style="display: none">
+      <div style="display: none"> <!-- turn display to block or inline for debugging -->
         <textarea id="message" style="width: 98%; height: 150px;"></textarea>
       </div>
     </div>
