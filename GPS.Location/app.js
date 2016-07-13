@@ -1,13 +1,36 @@
 "use sctrict";
 
+var Settings = require('settings'); // See https://pebble.github.io/pebblejs/#settings
 var UI = require('ui');
 var Accel = require('ui/accel');
 var Vibe = require('ui/vibe');
 
 var watchId;
 
-var prevFixTime;
-var prevFix;
+var MS  = "m/s";
+var MPH = "mph";
+var KMH = "km/h";
+
+var speedUnit   = MS;
+var refreshRate = 10; // in seconds
+
+Settings.config(
+    { url: 'http://lediouris.net/pebble/GPS.Location.html' },
+    function(e) { // OnOpen
+      console.log('opening configurable:', JSON.stringify(e));
+      // Reset wsuri before opening the webview
+      Settings.option('speedunit', speedUnit);
+      Settings.option('refreshrate', refreshRate);
+    },
+    function(e) { // OnClose. If the app is running, restart it.
+      speedUnit = Settings.option('speedunit');
+      refreshRate = Settings.option('refreshrate');
+      console.log('closed configurable, SpeedUnit:' + speedUnit + ", RefreshRate:" + refreshRate);
+      if (e.failed === true) {
+        console.log("Failed:" + JSON.stringify(e));
+      }
+    }
+);
 
 var main = new UI.Card({
   title: 'Connected',
@@ -38,27 +61,6 @@ var lpad = function(s, len, pad) {
   return str;
 };
 
-var degToRadians = function(angle) {
-  return angle * Math.PI / 180.0;
-};
-
-var radiansToDegrees = function(angle) {
-  return angle * 180.0 / Math.PI;
-};
-
-/**
- * from, to: {lat: 38.85643, lon: -123.98736}, in degrees
- * Return in nautical miles
- */
-var getDistance = function(from, to) {
-  var cos = Math.sin(degToRadians(from.lat)) *
-            Math.sin(degToRadians(to.lat)) +
-            Math.cos(degToRadians(from.lat)) *
-            Math.cos(degToRadians(to.lat)) * Math.cos(degToRadians(to.lon) - degToRadians(from.lon));
-  var dist = Math.acos(cos);
-  return radiansToDegrees(dist) * 60; // in nm
-};
-
 var dateHMS = function() {
   var d = new Date();
   return lpad(d.getHours().toString(), 2, '0') + ':' + lpad(d.getMinutes().toString(), 2, '0') + ':' + lpad(d.getSeconds().toString(), 2, '0');
@@ -66,24 +68,27 @@ var dateHMS = function() {
 
 // Called from navigator.geolocation.getCurrentPosition
 var onPosSuccess = function(pos) {
-  console.log('lat= ' + pos.coords.latitude + ' lon= ' + pos.coords.longitude);
-  console.log("Pos data:" + JSON.stringify(pos));
-  var speed;
-  var now = new Date().getTime();
-  if (prevFix !== undefined && prevFixTime !== undefined) {
-    var deltaDist = getDistance(prevFix, { lat:pos.coords.latitude, lon: pos.coords.longitude });
-    speed = (deltaDist * 1852) / ((now - prevFixTime) / 1000); // in m/s
-  }
-  prevFix = { lat:  pos.coords.latitude, lon: pos.coords.longitude };
-  prevFixTime = now;
+//console.log('lat= ' + pos.coords.latitude + ' lon= ' + pos.coords.longitude);
+//console.log('hdg= ' + pos.coords.heading + ' spd= ' + pos.coords.speed + ' m/s');
+//console.log("Pos data:" + JSON.stringify(pos)); // prints nothing...
   if (main !== undefined) {
     var card = main; // new UI.Card();
-    card.title('Location');
+    card.icon(null);
+    card.title('At ' + dateHMS());
     card.subtitle('');
+    var speed = pos.coords.speed;
+    var hdg = pos.coords.heading;
+    if (speed !== null) {
+      if (speedUnit === KMH) {
+        speed *= 3.6;
+      } else if (speedUnit === MPH) {
+        speed *= 2.2374145432;
+      }
+    }
     card.body(formatPos(pos.coords.latitude, 'L') + '\n' +
-              formatPos(pos.coords.longitude, 'G') + '\n' +
-              'At ' + dateHMS() + (speed !== undefined ? '\n' +
-                                             'Spd:' + (speed * 3.6).toFixed(speed < 10 ? 2 : (speed < 100? 1: 0)) + ' km/h' : ''));
+        formatPos(pos.coords.longitude, 'G') + '\n' +
+        'Speed:' + (speed !== null ? (speed.toFixed(speed < 10 ? 2 : (speed < 100? 1: 0)) + ' ' + speedUnit):' - ') + '\n' +
+        'Heading:' + (hdg !== null ? lpad(hdg + '\xB0', 4, '0') : ' - '));
     card.show();
   }
   if (watchId !== undefined) {
@@ -94,7 +99,7 @@ var onPosSuccess = function(pos) {
 // Called from navigator.geolocation.getCurrentPosition
 var onPosError = function(err) {
   if (err.code == err.PERMISSION_DENIED) {
-    console.log('Location access was denied by the user.');  
+    console.log('Location access was denied by the user.');
   } else {
     console.log('location error (' + err.code + '): ' + err.message);
   }
@@ -114,8 +119,8 @@ var onPosError = function(err) {
 // Choose options about the data returned
 var options = {
   enableHighAccuracy: true,
-  maximumAge: 10000,
-  timeout: 10000
+  maximumAge: 0,
+  timeout: 5000
 };
 
 // Request current position
@@ -132,7 +137,7 @@ main.on('accelTap', function(e) {
 
 var interval = setInterval(function() {
   watchId = navigator.geolocation.getCurrentPosition(onPosSuccess, onPosError, options);
-}, 10000);
+}, refreshRate * 1000);
 
 main.on('click', 'back', function(e) {
   console.log('Main BACK');
