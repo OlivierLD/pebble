@@ -7,29 +7,35 @@ var Vibe = require('ui/vibe');
 
 var watchId;
 
-var MS  = "m/s";
+var MS  = "ms";
 var MPH = "mph";
-var KMH = "km/h";
+var KMH = "kmh";
 
-var speedUnit   = MS;
-var refreshRate = 10; // in seconds
+var speedUnit = Settings.option('speedunit');
+var refreshRate = Settings.option('refreshrate');
+if (speedUnit === undefined) {
+  speedUnit   = MS;
+}
+if (refreshRate === undefined) {
+  refreshRate = 10; // in seconds
+}
 
 Settings.config(
-    { url: 'http://lediouris.net/pebble/GPS.Location.html' },
-    function(e) { // OnOpen
-      console.log('opening configurable:', JSON.stringify(e));
-      // Reset wsuri before opening the webview
-      Settings.option('speedunit', speedUnit);
-      Settings.option('refreshrate', refreshRate);
-    },
-    function(e) { // OnClose. If the app is running, restart it.
-      speedUnit = Settings.option('speedunit');
-      refreshRate = Settings.option('refreshrate');
-      console.log('closed configurable, SpeedUnit:' + speedUnit + ", RefreshRate:" + refreshRate);
-      if (e.failed === true) {
-        console.log("Failed:" + JSON.stringify(e));
-      }
+  { url: 'http://lediouris.net/pebble/GPS.Location.html' },
+  function(e) { // OnOpen
+    console.log('opening configurable:', JSON.stringify(e));
+    // Reset wsuri before opening the webview
+    Settings.option('speedunit', speedUnit);
+    Settings.option('refreshrate', refreshRate);
+  },
+  function(e) { // OnClose. If the app is running, restart it.
+    speedUnit = Settings.option('speedunit');
+    refreshRate = Settings.option('refreshrate');
+    console.log('closed configurable, SpeedUnit:' + speedUnit + ", RefreshRate:" + refreshRate);
+    if (e.failed === true) {
+      console.log("Failed:" + JSON.stringify(e));
     }
+  }
 );
 
 var main = new UI.Card({
@@ -86,9 +92,9 @@ var onPosSuccess = function(pos) {
       }
     }
     card.body(formatPos(pos.coords.latitude, 'L') + '\n' +
-        formatPos(pos.coords.longitude, 'G') + '\n' +
-        'Speed:' + (speed !== null ? (speed.toFixed(speed < 10 ? 2 : (speed < 100? 1: 0)) + ' ' + speedUnit):' - ') + '\n' +
-        'Heading:' + (hdg !== null ? lpad(hdg + '\xB0', 4, '0') : ' - '));
+              formatPos(pos.coords.longitude, 'G') + '\n' +
+              'Speed:' + (speed !== null ? (speed.toFixed(speed < 10 ? 2 : (speed < 100? 1: 0))):' -' + ' ' + speedUnit) + '\n' +
+              'Heading:' + (hdg !== null ? lpad(hdg + '\xB0', 4, '0') : ' - '));
     card.show();
   }
   if (watchId !== undefined) {
@@ -142,5 +148,8 @@ var interval = setInterval(function() {
 main.on('click', 'back', function(e) {
   console.log('Main BACK');
   clearInterval(interval);
+  if (watchId !== undefined) {
+    navigator.geolocation.clearWatch(watchId); // Stop receiving data
+  }
   main.hide();
 });

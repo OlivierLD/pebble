@@ -22,6 +22,18 @@
           <input type="text" size="50" name="rr" id="rr" placeholder="in seconds"></input>
         </div>
 
+        <div data-role="fieldcontain">
+          <fieldset data-role="controlgroup" data-type="horizontal">
+            <legend>Speed Unit:</legend>
+            <input type="radio" name="speedunit" id="radio-choice-h-2a" value="ms" checked="checked">
+            <label for="radio-choice-h-2a">m/s</label>
+            <input type="radio" name="speedunit" id="radio-choice-h-2b" value="kmh">
+            <label for="radio-choice-h-2b">km/h</label>
+            <input type="radio" name="speedunit" id="radio-choice-h-2c" value="mph">
+            <label for="radio-choice-h-2c">mph</label>
+          </fieldset>
+        </div>
+
         <div class="ui-body ui-body-b">
           <fieldset class="ui-grid-a">
             <div class="ui-block-a"><button type="submit" data-theme="d" id="b-cancel">Cancel</button></div>
@@ -40,7 +52,10 @@
         $('#message').text(content);
       };
       var saveOptions = function() {
-        var options = { wsuri: $('#wsuri').val() };
+        var options = {
+           refreshrate: $('#rr').val(),
+           speedunit: $('input[name="speedunit"]:checked').val()
+        };
         console.log('saveOptions:', options);
         return options;
       };
@@ -79,8 +94,12 @@
           var obj = jQuery.parseJSON(strJson);
           console.log('Received:', JSON.stringify(obj));
           appendMess('3 - ' + JSON.stringify(obj));
-          if (obj.wsuri) {
-            $('#rr').val(obj.wsuri);
+          if (obj.refreshrate) {
+            $('#rr').val(obj.refreshrate);
+          }
+          if (obj.speedunit) {
+            var locator = 'input:radio[name=speedunit][value=' + obj.speedunit + ']';
+            $(locator).attr('checked', 'checked');
           }
         } catch (err) {
           console.log(err);
