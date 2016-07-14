@@ -25,12 +25,12 @@
         <div data-role="fieldcontain">
           <fieldset data-role="controlgroup" data-type="horizontal">
             <legend>Speed Unit:</legend>
-            <input type="radio" name="speedunit" id="radio-choice-h-2a" value="ms" checked="checked">
-            <label for="radio-choice-h-2a">m/s</label>
-            <input type="radio" name="speedunit" id="radio-choice-h-2b" value="kmh">
-            <label for="radio-choice-h-2b">km/h</label>
-            <input type="radio" name="speedunit" id="radio-choice-h-2c" value="mph">
-            <label for="radio-choice-h-2c">mph</label>
+            <input type="radio" name="speedunit" id="radio-ms" value="ms">
+            <label for="radio-ms">m/s</label>
+            <input type="radio" name="speedunit" id="radio-kmh" value="kmh">
+            <label for="radio-kmh">km/h</label>
+            <input type="radio" name="speedunit" id="radio-mph" value="mph">
+            <label for="radio-mph">mph</label>
           </fieldset>
         </div>
 
@@ -98,8 +98,13 @@
             $('#rr').val(obj.refreshrate);
           }
           if (obj.speedunit) {
-            var locator = 'input:radio[name=speedunit][value=' + obj.speedunit + ']';
-            $(locator).attr('checked', 'checked');
+            $("#radio-" + obj.speedunit).click(); // .prop("checked", true).button("refresh");
+            $("#radio-" + obj.speedunit).click(); // Why twice?...
+            console.log('Checking ' + obj.speedunit);
+          } else {
+            $("#radio-ms").click(); // prop("checked", true).button("refresh");
+            $("#radio-ms").click(); // Why twice?...
+            console.log('Checking ms');
           }
         } catch (err) {
           console.log(err);

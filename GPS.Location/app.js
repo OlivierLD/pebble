@@ -93,7 +93,7 @@ var onPosSuccess = function(pos) {
     }
     card.body(formatPos(pos.coords.latitude, 'L') + '\n' +
               formatPos(pos.coords.longitude, 'G') + '\n' +
-              'Speed:' + (speed !== null ? (speed.toFixed(speed < 10 ? 2 : (speed < 100? 1: 0))):' -' + ' ' + speedUnit) + '\n' +
+              'Speed:' + (speed !== null ? (speed.toFixed(speed < 10 ? 2 : (speed < 100? 1: 0))):' -') + ' ' + speedUnit + '\n' +
               'Heading:' + (hdg !== null ? lpad(hdg + '\xB0', 4, '0') : ' - '));
     card.show();
   }
