@@ -6,37 +6,39 @@ var Accel = require('ui/accel');
 var Vibe = require('ui/vibe');
 
 var watchId;
+var interval;
 
 var MS  = "ms";
 var MPH = "mph";
 var KMH = "kmh";
 
-var speedUnit = Settings.option('speedunit');
+var speedUnit   = Settings.option('speedunit');
 var refreshRate = Settings.option('refreshrate');
+
+// Choose options about the data returned
+var options = {
+  enableHighAccuracy: true,
+  maximumAge: 0,
+  timeout: 5000
+};
+
+var bounce = function() {
+  if (interval !== undefined) {
+    console.log('Reseting the loop.');
+    clearInterval(interval);
+  }
+  console.log('Starting new loop.');
+  interval = setInterval(function() {
+    watchId = navigator.geolocation.getCurrentPosition(onPosSuccess, onPosError, options);
+  }, refreshRate * 1000);
+};
+
 if (speedUnit === undefined) {
   speedUnit   = MS;
 }
 if (refreshRate === undefined) {
   refreshRate = 10; // in seconds
 }
-
-Settings.config(
-  { url: 'http://lediouris.net/pebble/GPS.Location.html' },
-  function(e) { // OnOpen
-    console.log('opening configurable:', JSON.stringify(e));
-    // Reset wsuri before opening the webview
-    Settings.option('speedunit', speedUnit);
-    Settings.option('refreshrate', refreshRate);
-  },
-  function(e) { // OnClose. If the app is running, restart it.
-    speedUnit = Settings.option('speedunit');
-    refreshRate = Settings.option('refreshrate');
-    console.log('closed configurable, SpeedUnit:' + speedUnit + ", RefreshRate:" + refreshRate);
-    if (e.failed === true) {
-      console.log("Failed:" + JSON.stringify(e));
-    }
-  }
-);
 
 var main = new UI.Card({
   title: 'Connected',
@@ -56,7 +58,7 @@ var formatPos = function(coord, type) {
   }
   var deg = Math.floor(n);
   var dec = (n - deg) * 60;
-  return sgn + ' ' + deg + '\xB0' + dec.toFixed(2);
+  return sgn + ' ' + deg + '\xB0' + dec.toFixed(2) + "'";
 };
 
 var lpad = function(s, len, pad) {
@@ -122,12 +124,24 @@ var onPosError = function(err) {
   }
 };
 
-// Choose options about the data returned
-var options = {
-  enableHighAccuracy: true,
-  maximumAge: 0,
-  timeout: 5000
-};
+Settings.config(
+  { url: 'http://lediouris.net/pebble/GPS.Location.html' },
+  function(e) { // OnOpen
+    console.log('opening configurable:', JSON.stringify(e));
+    // Reset wsuri before opening the webview
+    Settings.option('speedunit', speedUnit);
+    Settings.option('refreshrate', refreshRate);
+  },
+  function(e) { // OnClose. If the app is running, restart it.
+    speedUnit = Settings.option('speedunit');
+    refreshRate = Settings.option('refreshrate');
+    console.log('closed configurable, SpeedUnit:' + speedUnit + ", RefreshRate:" + refreshRate);
+    bounce();
+    if (e.failed === true) {
+      console.log("Failed:" + JSON.stringify(e));
+    }
+  }
+);
 
 // Request current position
 watchId = navigator.geolocation.getCurrentPosition(onPosSuccess, onPosError, options);
@@ -141,10 +155,6 @@ main.on('accelTap', function(e) {
   Vibe.vibrate('short');
 });
 
-var interval = setInterval(function() {
-  watchId = navigator.geolocation.getCurrentPosition(onPosSuccess, onPosError, options);
-}, refreshRate * 1000);
-
 main.on('click', 'back', function(e) {
   console.log('Main BACK');
   clearInterval(interval);
@@ -153,3 +163,5 @@ main.on('click', 'back', function(e) {
   }
   main.hide();
 });
+
+bounce();
