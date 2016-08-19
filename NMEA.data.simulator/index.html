@@ -11,6 +11,7 @@
     <script>
         window.onload = function() {
             var wsUrl = "ws://" + window.location.hostname + ":" + window.location.port + "/";
+//          var wsUrl = "ws://192.168.1.1:9876/";
             var connection = new WebSocket(wsUrl);
             connection.onopen = function () {
               //  connection.send('Ping'); // Send the message 'Ping' to the server
