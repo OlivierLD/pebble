@@ -5,6 +5,8 @@ var UI = require('ui');
 var Accel = require('ui/accel');
 var Vibe = require('ui/vibe');
 
+var demo = false;
+
 var watchId;
 var interval;
 
@@ -86,6 +88,11 @@ var onPosSuccess = function(pos) {
     card.subtitle('');
     var speed = pos.coords.speed;
     var hdg = pos.coords.heading;
+
+    if (demo && (speed === null || speed === undefined || hdg === null || hdg === undefined)) {
+      speed = 30.5;
+      hdg = 356;
+    }
     if (speed !== null) {
       if (speedUnit === KMH) {
         speed *= 3.6;
