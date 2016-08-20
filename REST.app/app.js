@@ -9,7 +9,7 @@ var Settings = require('settings'); // See https://pebble.github.io/pebblejs/#se
 
 var key = Settings.option('aio-key'); // Get the key from a config...
 if (key === undefined) {
-    key = '54c2767878ca793f2e3cae1c45d62aa7ae9f8056';
+  key = '54c2767878ca793f2e3cae1c45d62aa7ae9f8056';
 }
 
 Settings.config(
@@ -23,7 +23,7 @@ Settings.config(
         key = Settings.option('aio-key');
         console.log('closed configurable, Key:', key);
         if (e.failed === true) {
-            console.log("Failed:" + JSON.stringify(e));
+          console.log("Failed:" + JSON.stringify(e));
         }
     }
 );
@@ -34,9 +34,9 @@ var PREFIX = "https://io.adafruit.com/api/feeds/";
 var ONOFF_FEED = "onoff";
 
 var main = new UI.Card({
-    title: 'Switch.js',
-    icon: 'images/menu_icon.png',
-    subtitle: ' - ',
+    title: ' Switch',
+    icon: 'images/cloud.png',
+    subtitle: 'Swicth is ?',
     body: 'Up  : ON\nDown: OFF',
     subtitleColor: 'indigo', // Named colors
     bodyColor: '#9a0036' // Hex colors
@@ -56,8 +56,8 @@ var setSwitch = function(position) {
                 var card = main; // new UI.Card();
                 var resp = JSON.parse(xhr.responseText);
                 if (resp !== undefined && resp.value !== undefined) {
-                    card.subtitle('Switch ' + resp.value);
-                    card.show();
+                  card.subtitle('Switch is ' + resp.value);
+                  card.show();
                 }
             }
         } else {
