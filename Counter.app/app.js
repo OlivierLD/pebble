@@ -9,10 +9,10 @@ var UI = require('ui');
 var counterValue = 0;
 
 var main = new UI.Card({
-  title: ' Counter',
+  title: ' ' + counterValue.toFixed(0),
   icon: 'images/menu_icon.png',
-  subtitle: counterValue,
-  body: 'Up  : +\nDown: -\nSelect: Reset'
+  subtitle: 'Counter',
+  body: 'Up:+, Down:-, Select:Reset'
 });
 
 main.show();
@@ -20,7 +20,7 @@ main.show();
 var displayValue = function() {
   if (main !== undefined) {
     var card = main; // new UI.Card();
-    card.subtitle(counterValue);
+    card.title(' ' + counterValue.toFixed(0));
     card.show();
   }
 };
