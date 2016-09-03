@@ -5,7 +5,7 @@ Copy the content of `app.js` in your [CloudPebble](https://cloudpebble.net/ide/)
 <table>
   <tr>
     <td align="center" valign="top">
-      Welcome screen, <br/>use up, down, reset
+      Welcome screen, <br/>use up, down, select
     </td>
     <td align="center" valign="top">
       Counting
