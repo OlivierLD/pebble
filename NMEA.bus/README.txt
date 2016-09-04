@@ -1,1 +1,1 @@
-Very simple example. No menu, no config.
+Very simple example, used as a basic jumpstart. No menu, no config.

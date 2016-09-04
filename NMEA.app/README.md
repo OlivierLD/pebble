@@ -1,5 +1,12 @@
 ## Pebble NMEA app
 
+A several page application showcasing:
+- Custom menu icon
+- Custom application icon
+- External configuration
+- Menu usage
+- WebSocket client
+
 Copy the content of `app.js` in your [CloudPebble](https://cloudpebble.net/ide/) account.
 
 The config page `NMEA.app.html` is already deployed.

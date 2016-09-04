@@ -1,5 +1,5 @@
 ## Pebble Sheep Counter app
-With an action bar.
+A two-page application, with an action bar.
 
 Copy the content of `app.js` in your [CloudPebble](https://cloudpebble.net/ide/) account.
 
