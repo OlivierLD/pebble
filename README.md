@@ -10,7 +10,8 @@ Several reusable samples
 ---
 
 - [A Sheep Counter](https://github.com/OlivierLD/pebble/tree/master/Counter.app)
-    - features a 2-page application and an action bar.
+    - A 2-page application
+    - Action bar (Up, Down, Select)
     - Custom menu icon
 - [GPS Location](https://github.com/OlivierLD/pebble/tree/master/GPS.Location) 
     - GPS Location (Position, Heading, Speed)
