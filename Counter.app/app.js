@@ -1,5 +1,5 @@
 /**
- * A simple sheep counter.
+ * A simple counter.
  * Up     +1
  * Down   -1
  * Select Reset
@@ -11,17 +11,27 @@ var counterValue = 0;
 
 var main = new UI.Card({
   title: ' Counter',
-  icon: 'images/menu_icon.png',
   subtitle: 'Operation:',
-  body: 'Up:+ Down:- Select:Reset'
+  body: 'Up:+ Down:- Select:Reset',
+  action: {
+    up: 'images/action_icon_plus.png',
+    select: 'images/reset.png',
+    down: 'images/action_icon_minus.png'
+  }
 });
 
 main.show();
 
 // New data window for the counter value
 var dataWind = new UI.Window({
-  backgroundColor: 'white'
+  backgroundColor: 'white',
+  action: {
+    up: 'images/action_icon_plus.png',
+    select: 'images/reset.png',
+    down: 'images/action_icon_minus.png'
+  }
 });
+
 var dataTextfield = new UI.Text({
   size: new Vector2(140, 60),
   font: 'bitham-42-bold',
@@ -43,7 +53,7 @@ var setData = function(value) {
 
 var displayValue = function() {
   if (dataWind !== undefined) {
-    var card = dataWind;
+    var card = dataWind; // new UI.Card();
     setData(counterValue);
     card.show();
   }
