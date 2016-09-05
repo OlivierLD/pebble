@@ -3,7 +3,7 @@ A two-page application, with an action bar.
 
 Copy the content of `app.js` in your [CloudPebble](https://cloudpebble.net/ide/) account.
 
-![On the watch](01.png) ![Config](02.png) 
+![Welcome screen](01.png) ![Counting](02.png) 
 
 <!--table>
   <tr>
