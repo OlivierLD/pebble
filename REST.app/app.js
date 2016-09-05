@@ -34,12 +34,16 @@ var PREFIX = "https://io.adafruit.com/api/feeds/";
 var ONOFF_FEED = "onoff";
 
 var main = new UI.Card({
-    title: ' Switch',
+    title: ' IoT',
     icon: 'images/cloud.png',
     subtitle: 'Swicth is ?',
     body: 'Up  : ON\nDown: OFF',
     subtitleColor: 'indigo', // Named colors
-    bodyColor: '#9a0036' // Hex colors
+    bodyColor: '#9a0036', // Hex colors
+    action: {
+      up: 'images/check.png',
+      down: 'images/cross.png'
+    }
 });
 
 main.show();
