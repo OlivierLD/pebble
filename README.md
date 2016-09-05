@@ -24,6 +24,6 @@ Several reusable samples
     - WebSocket client
     - Configuration
     - Menu Usage
-    - Several page
+    - Several pages
     - Custom menu icon
     - Custom application icon
