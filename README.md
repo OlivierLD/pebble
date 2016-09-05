@@ -1,5 +1,5 @@
 # pebble
-Several reusable samples
+Several reusable samples, with Pebble JS.
 
 ---
 
