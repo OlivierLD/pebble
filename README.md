@@ -9,6 +9,17 @@ Several reusable samples, with Pebble JS.
 
 ---
 
+### How to use those projects
+- Create a new PebbleJS project in your [Cloud IDE](https://cloudpebble.net/).
+- Copy the content of `app.js` from this project to the IDE.
+- If and when images are required:
+    - Add them - one by one - in the `RESOURCES` section of the IDE project
+    - They will be mentioned in the code, _by their names_ (`IDENTIFIER` is not used in PebbleJS).
+
+---
+
+Featuring:
+
 - [A Sheep Counter](https://github.com/OlivierLD/pebble/tree/master/Counter.app)
     - A 2-page application
     - Action bar (Up, Down, Select)
