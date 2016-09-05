@@ -8,6 +8,6 @@ The app gives the location of the device in latitude and longitude, plus  the sp
 
 A configuration screen helps you to set the speed unit, and the refresh rate.
 
- ![On the watch](screenshot.png) ![Config](config.jpg) 
+ ![On the watch](screenshot.png)<br>![Config](config.jpg) 
 
 ------------------------------------------------------
