@@ -3,7 +3,9 @@ A two-page application, with an action bar.
 
 Copy the content of `app.js` in your [CloudPebble](https://cloudpebble.net/ide/) account.
 
-<table>
+![On the watch](01.png) ![Config](02.png) 
+
+<!--table>
   <tr>
     <td align="center" valign="top">
       Welcome screen, <br/>use up, down, select
@@ -20,6 +22,6 @@ Copy the content of `app.js` in your [CloudPebble](https://cloudpebble.net/ide/)
       <img src="02.png" alt="Counting">
     </td>
   </tr>
-</table>
+</table-->
 
 Use `Back` to return to the welcome screen, and `Back` again to exit.
