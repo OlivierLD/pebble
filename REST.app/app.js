@@ -41,8 +41,8 @@ var main = new UI.Card({
     subtitleColor: 'indigo', // Named colors
     bodyColor: '#9a0036', // Hex colors
     action: {
-      up: 'images/check.png',
-      down: 'images/cross.png'
+      up: 'images/action_bar_icon_check.png',
+      down: 'images/action_bar_icon_dismiss.png'
     }
 });
 

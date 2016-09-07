@@ -14,9 +14,9 @@ var main = new UI.Card({
   subtitle: 'Operation:',
   body: 'Up:+ Down:- Select:Reset',
   action: {
-    up: 'images/action_icon_plus.png',
-    select: 'images/reset.png',
-    down: 'images/action_icon_minus.png'
+    up: 'images/action_bar_icon_up.png',
+    select: 'images/music_icon_play.png',
+    down: 'images/action_bar_icon_down.png'
   }
 });
 
@@ -26,9 +26,9 @@ main.show();
 var dataWind = new UI.Window({
   backgroundColor: 'white',
   action: {
-    up: 'images/action_icon_plus.png',
-    select: 'images/reset.png',
-    down: 'images/action_icon_minus.png'
+    up: 'images/action_bar_icon_up.png',
+    select: 'images/music_icon_play.png',
+    down: 'images/action_bar_icon_down.png'
   }
 });
 
