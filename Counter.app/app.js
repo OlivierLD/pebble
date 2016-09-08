@@ -11,6 +11,7 @@ var counterValue = 0;
 
 var main = new UI.Card({
   title: ' Counter',
+//icon: 'images/sheep.png',
   subtitle: 'Operation:',
   body: 'Up:+ Down:- Select:Reset',
   action: {
@@ -33,12 +34,19 @@ var dataWind = new UI.Window({
 });
 
 var dataTextfield = new UI.Text({
-  size: new Vector2(140, 60),
+  size: new Vector2(112, 60),
   font: 'bitham-42-bold',
   color: 'black',
   borderColor: 'black',
   textAlign: 'center'
 });
+
+var sheepImage = new UI.Image({
+  position: new Vector2(56 - (28 / 2), 10),
+  size: new Vector2(28, 30),
+  image: "images/sheep.png"
+});
+
 var windSize = dataWind.size();
 var textfieldPos = dataTextfield.position()
       .addSelf(windSize)
@@ -46,6 +54,7 @@ var textfieldPos = dataTextfield.position()
       .multiplyScalar(0.5);
 dataTextfield.position(textfieldPos);
 dataWind.add(dataTextfield);
+dataWind.add(sheepImage);
 
 var setData = function(value) {
   dataTextfield.text(value);
