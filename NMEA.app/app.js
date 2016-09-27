@@ -224,7 +224,7 @@ var channels = [ { chan: 'BSP',
 // icon: 'images/paperboat.png',
 
 var menuItems = [{
-        title: 'NMEA display',
+        title: 'NMEA calculate',
         subtitle: 'Choose the data'
       }];
 
@@ -234,7 +234,7 @@ channels.forEach(function(chan) {
 
 var displayMenu = function() {
   inSelect = true;
-//console.log('Choosing the data to display');
+//console.log('Choosing the data to calculate');
   var menu = new UI.Menu({
     sections: [{
       items: menuItems

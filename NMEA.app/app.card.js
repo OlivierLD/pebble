@@ -146,7 +146,7 @@ var selectedChannel;
 // icon: 'images/paperboat.png',
 
 var menuItems = [{
-        title: 'NMEA display',
+        title: 'NMEA calculate',
         subtitle: 'Choose the data'
       }];
 
@@ -156,7 +156,7 @@ channels.forEach(function(chan) {
 
 main.on('click', 'select', function(e) {
   inSelect = true;
-//console.log('Choosing the data to display');
+//console.log('Choosing the data to calculate');
   var menu = new UI.Menu({
     sections: [{
       items: menuItems
