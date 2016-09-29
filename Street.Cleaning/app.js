@@ -103,33 +103,26 @@ main.show();
 
 var ne_image = new UI.Image({
     position: new Vector2(0, 0),
-    size: new Vector2(144, 144),
-    backgroundColor: 'clear',
-    image: 'images/compass.png',
+    size: new Vector2(144, 168),
+    image: 'images/action_bar_icon_up.png',
 });
 var nw_image = new UI.Image({
     position: new Vector2(0, 0),
-    size: new Vector2(144, 144),
-    backgroundColor: 'clear',
-    image: 'images/compass.png',
+    size: new Vector2(144, 168),
+    image: 'images/action_bar_icon_up.png',
 });
 var se_image = new UI.Image({
     position: new Vector2(0, 0),
-    size: new Vector2(144, 144),
-    backgroundColor: 'clear',
+    size: new Vector2(144, 168),
     image: 'images/compass.png',
 });
 var sw_image = new UI.Image({
     position: new Vector2(0, 0),
-    size: new Vector2(144, 144),
-    backgroundColor: 'clear',
-    image: 'images/compass.png',
+    size: new Vector2(144, 168),
+    image: 'images/action_bar_icon_down.png',
 });
 
-var imgWind = new UI.Window({
-    title: 'Map',
-    backgroundColor: 'white'
-});
+var imgWind = new UI.Window({ });
 
 var updateCurrentDate = function() {
 //console.log("Now " + MONTHS[month] + " " + year);
@@ -173,25 +166,28 @@ main.on('click', 'select', function(e) {
     menu.on('select', function(e) {
         console.log('Selected item #' + e.itemIndex + ' of section #' + e.sectionIndex);
         console.log('The item is titled "' + e.item.title + ' ' + e.item.subtitle + '"');
-        var quadrant = e.item.subtitle.substring(0, 2);
-        console.log("Quadrant:" + quadrant);
-        switch (quadrant) {
-            case "NW":
-                imgWind.add(nw_image);
-                break;
-            case "NE":
-                imgWind.add(ne_image);
-                break;
-            case "SW":
-                imgWind.add(sw_image);
-                break;
-            case "SE":
-                imgWind.add(se_image);
-                break;
-            default:
-                break;
+        if (e.itemIndex > 0) {
+            var quadrant = e.item.subtitle.substring(0, 2);
+            console.log("Quadrant:" + quadrant);
+            switch (quadrant) {
+                case "NW":
+                    imgWind.add(nw_image);
+                    break;
+                case "NE":
+                    imgWind.add(ne_image);
+                    break;
+                case "SW":
+                    imgWind.add(sw_image);
+                    break;
+                case "SE":
+                    imgWind.add(se_image);
+                    break;
+                default:
+                    console.log("Image not found");
+                    break;
+            }
+            imgWind.show();
         }
-        imgWind.show();
     });
     menu.show();
 });
