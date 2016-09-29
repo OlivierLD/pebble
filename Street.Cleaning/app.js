@@ -91,7 +91,7 @@ var sameDay = function(dayOne, dayTwo) {
 var main = new UI.Card({
     title: (MONTHS[month] + " " + year),
     subtitle: 'SF Street Cleaning',
-    body: 'Up:Next Month Down:Prev Month Select:Now',
+    body: 'Up:Prev month Down:Next month Select:This month',
     action: {
         up: 'images/action_bar_icon_up.png',
         select: 'images/music_icon_play.png',
@@ -106,7 +106,7 @@ var updateCurrentDate = function() {
     main.title(MONTHS[month] + " " + year);
 };
 
-main.on('click', 'up', function(e) {
+main.on('click', 'down', function(e) {
     // Next month
 //console.log('Next month');
     var n = plus(month, year);
@@ -129,6 +129,9 @@ main.on('click', 'select', function(e) {
             title: scData[i].day,
             subtitle: scData[i].where.label + " " + scData[i].when
         };
+        if (scData[i].today === true ) {
+            item.icon = 'images/warning.png';
+        }
         menuItems.push(item);
     }
 
@@ -144,7 +147,7 @@ main.on('click', 'select', function(e) {
     menu.show();
 });
 
-main.on('click', 'down', function(e) {
+main.on('click', 'up', function(e) {
     // Previous month
 //console.log('Previous month');
     var p = minus(month, year);

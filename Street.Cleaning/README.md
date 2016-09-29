@@ -8,3 +8,4 @@ From the first screen:
 - Down: previous month
 
 As of Sep 2016, the menu image must be 25x25 maximum.
+
