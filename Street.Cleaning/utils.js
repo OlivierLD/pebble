@@ -1,44 +1,11 @@
 "use strict";
 
-// Formatting Utilities
-var getMask = function(num) {
-  var maskDim = 2;
-  for (var i=2; i<16; i+=2) {
-    maskDim = i;
-    if (Math.abs(num) < (Math.pow(16, i) - 1)) {
-//    console.log("i=" + i + ", " + Math.abs(num) + " < " + (Math.pow(16, i) - 1));
-      break;
-    }
-  }
-  return Math.pow(16, maskDim) - 1;
-};
-
-var toHexString = function(num, len) {
-  var l = (len !== undefined ? len : 4);
-  return "0x" + lpad((num & getMask(num)).toString(16).trim().toUpperCase(), l, '0');
-};
-
-var toBinString = function(num, len) {
-  var l = (len !== undefined ? len : 16);
-  return "0&" + lpad((num & getMask(num)).toString(2).trim().toUpperCase(), l, '0');
-};
-
 var lpad = function(str, len, pad) {
   var s = str;
   while (s.length < len) {
     s = (pad !== undefined ? pad : " ") + s;
   }
   return s;
-};
-
-// Careful with this one, it could be demanding...
-var sleep = function(milliseconds) {
-  var start = new Date().getTime();
-  while (true) {
-    if ((new Date().getTime() - start) > milliseconds) {
-      break;
-    }
-  }
 };
 
 // Date formatting
@@ -174,60 +141,4 @@ Date.prototype.format = function(dateFormat) {
   return dateString;
 };
 
-var getNetworkIPs = (function () {
-  var ignoreRE = /^(127\.0\.0\.1|::1|fe80(:1)?::1(%.*)?)$/i;
-
-  var exec = require('child_process').exec;
-  var cached;
-  var command;
-  var filterRE;
-
-  switch (process.platform) {
-    case 'win32':
-      //case 'win64': // TODO: test
-      command = 'ipconfig';
-      filterRE = /\bIPv[46][^:\r\n]+:\s*([^\s]+)/g;
-      break;
-    case 'darwin':
-      command = 'ifconfig';
-      filterRE = /\binet\s+([^\s]+)/g;
-      // filterRE = /\binet6\s+([^\s]+)/g; // IPv6
-      break;
-    default:
-      command = 'ifconfig';
-      filterRE = /\binet\b[^:]+:\s*([^\s]+)/g;
-      // filterRE = /\binet6[^:]+:\s*([^\s]+)/g; // IPv6
-      break;
-  }
-
-  return function (callback, bypassCache) {
-    if (cached && !bypassCache) {
-      callback(null, cached);
-      return;
-    }
-    // system call
-    exec(command, function (error, stdout, sterr) {
-      cached = [];
-      var ip;
-      var matches = stdout.match(filterRE) || [];
-      //if (!error) {
-      for (var i = 0; i < matches.length; i++) {
-        ip = matches[i].replace(filterRE, '$1')
-        if (!ignoreRE.test(ip)) {
-          cached.push(ip);
-        }
-      }
-      //}
-      callback(error, cached);
-    });
-  };
-})();
-
-// Exports. Publicly exposed
-//     external = internal
-// -------------=------------
 exports.version = '0.0.1';
-exports.hexFmt  = toHexString;
-exports.binFmt  = toBinString;
-exports.getIPs  = getNetworkIPs;
-exports.sleep   = sleep;
