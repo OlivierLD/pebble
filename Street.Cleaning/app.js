@@ -101,6 +101,36 @@ var main = new UI.Card({
 
 main.show();
 
+var ne_image = new UI.Image({
+    position: new Vector2(0, 0),
+    size: new Vector2(144, 144),
+    backgroundColor: 'clear',
+    image: 'images/compass.png',
+});
+var nw_image = new UI.Image({
+    position: new Vector2(0, 0),
+    size: new Vector2(144, 144),
+    backgroundColor: 'clear',
+    image: 'images/compass.png',
+});
+var se_image = new UI.Image({
+    position: new Vector2(0, 0),
+    size: new Vector2(144, 144),
+    backgroundColor: 'clear',
+    image: 'images/compass.png',
+});
+var sw_image = new UI.Image({
+    position: new Vector2(0, 0),
+    size: new Vector2(144, 144),
+    backgroundColor: 'clear',
+    image: 'images/compass.png',
+});
+
+var imgWind = new UI.Window({
+    title: 'Map',
+    backgroundColor: 'white'
+});
+
 var updateCurrentDate = function() {
 //console.log("Now " + MONTHS[month] + " " + year);
     main.title(MONTHS[month] + " " + year);
@@ -140,9 +170,28 @@ main.on('click', 'select', function(e) {
             items: menuItems
         }]
     });
-    menu.on('select', function(e) { // TODO Display map
+    menu.on('select', function(e) {
         console.log('Selected item #' + e.itemIndex + ' of section #' + e.sectionIndex);
         console.log('The item is titled "' + e.item.title + ' ' + e.item.subtitle + '"');
+        var quadrant = e.item.subtitle.substring(0, 2);
+        console.log("Quadrant:" + quadrant);
+        switch (quadrant) {
+            case "NW":
+                imgWind.add(nw_image);
+                break;
+            case "NE":
+                imgWind.add(ne_image);
+                break;
+            case "SW":
+                imgWind.add(sw_image);
+                break;
+            case "SE":
+                imgWind.add(se_image);
+                break;
+            default:
+                break;
+        }
+        imgWind.show();
     });
     menu.show();
 });

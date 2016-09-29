@@ -9,3 +9,7 @@ From the first screen:
 
 As of Sep 2016, the menu image must be 25x25 maximum. Use tick.png as menu icon.
 
+
+![Choose your month](./snap.01.png)
+
+![Scroll through](./snap.02.png)
