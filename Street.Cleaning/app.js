@@ -1,6 +1,6 @@
 var UI = require('ui');
 var Vector2 = require('vector2');
-var utils = require('./utils.js');
+var utils = require('./utils.js'); // Date prototyping
 
 var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -23,12 +23,18 @@ var ZONE_SE = { id: 4, label: "SE Block" }; // yellow
 var _12_TO_14 = "12 to 14";
 var _13_TO_15 = "13 to 15";
 
+var sameDay = function(dayOne, dayTwo) {
+    return (dayOne.getFullYear() === dayTwo.getFullYear() &&
+    dayOne.getMonth() === dayTwo.getMonth() &&
+    dayOne.getDate() === dayTwo.getDate());
+};
+
 var calculate = function(month, year) {
     var scDays = [];
 
     var today = new Date();
     // First day of the week: Sunday
-    var firstDay = new Date(year, month, 1, 0, 0, 0, 0);
+    var firstDay = new Date(year, month, 1, 0, 0, 0, 0); // 1st day of month, at 00:00:00.0
 
     var mondayCount   = 0;
     var thursdayCount = 0;
@@ -56,11 +62,6 @@ var calculate = function(month, year) {
     return scDays;
 };
 
-var setup = function(month, year) {
-    return { period: MONTHS[month] + " " + year,
-        data: calculate(month, year) };
-};
-
 var plus = function(m, y) {
     var month = m+1;
     if (month > 11) {
@@ -77,12 +78,6 @@ var minus = function(m, y) {
         y -= 1;
     }
     return { year: y, month: month };
-};
-
-var sameDay = function(dayOne, dayTwo) {
-    return (dayOne.getFullYear() === dayTwo.getFullYear() &&
-    dayOne.getMonth() === dayTwo.getMonth() &&
-    dayOne.getDate() === dayTwo.getDate());
 };
 
 /**
@@ -147,7 +142,7 @@ main.on('click', 'select', function(e) {
 //  console.log("=>" + JSON.stringify(scData, null, 2));
 
     var menuItems = [{
-        title: MONTHS[month] + " " + year
+        title: MONTHS[month] + " " + year // 1st line. Month & Year.
     }];
     for (var i=0; i<scData.length; i++) {
         var item = {
