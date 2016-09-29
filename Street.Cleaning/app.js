@@ -104,25 +104,27 @@ main.show();
 var ne_image = new UI.Image({
     position: new Vector2(0, 0),
     size: new Vector2(144, 168),
-    image: 'images/action_bar_icon_up.png',
+    image: 'images/NE.png',
 });
 var nw_image = new UI.Image({
     position: new Vector2(0, 0),
     size: new Vector2(144, 168),
-    image: 'images/action_bar_icon_up.png',
+    image: 'images/NW.png',
 });
 var se_image = new UI.Image({
     position: new Vector2(0, 0),
     size: new Vector2(144, 168),
-    image: 'images/compass.png',
+    image: 'images/SE.png',
 });
 var sw_image = new UI.Image({
     position: new Vector2(0, 0),
     size: new Vector2(144, 168),
-    image: 'images/action_bar_icon_down.png',
+    image: 'images/SW.png',
 });
 
-var imgWind = new UI.Window({ });
+var imgWind = new UI.Window({
+    backgroundColor: 'gray'
+});
 
 var updateCurrentDate = function() {
 //console.log("Now " + MONTHS[month] + " " + year);
