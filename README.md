@@ -38,3 +38,8 @@ Featuring:
     - Several pages
     - Custom menu icon
     - Custom application icon
+- [Street Cleaning](https://github.com/OlivierLD/pebble/tree/master/Street.Cleaning)
+    - Multi-file app
+    - Action Bar
+    - Dynamic menu
+    - Image display
