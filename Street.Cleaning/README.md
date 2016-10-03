@@ -20,3 +20,5 @@ As of Sep 2016, the menu image must be 25x25 maximum. Use tick.png as menu icon.
 ![Scroll through](./snap.02.png)
 
 ![SW Quadrant](./snap.03.png)
+
+![Warning: today!](./snap.04.png)
