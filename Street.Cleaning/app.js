@@ -1,3 +1,6 @@
+/*
+ * Pebble equivalent of http://lediouris.net/utils/StreetCleaning.html
+ */
 var UI = require('ui');
 var Vector2 = require('vector2');
 var utils = require('./utils.js'); // Date prototyping
