@@ -8,7 +8,7 @@ var Settings = require('settings'); // See https://pebble.github.io/pebblejs/#se
 var UI = require('ui');
 var Vector2 = require('vector2');
 
-var wsURI = Settings.option('wsuri'); // Get the URL from a config...  ws://192.168.1.176:9876
+var wsURI = Settings.option('wsuri'); // Get the URL from a config...  ws://192.168.1.176/signalk/v1/stream
 if (wsURI === undefined) {
     wsURI = 'ws://192.168.1.1/signalk/v1/stream';
 }
@@ -34,10 +34,14 @@ var ws = new WebSocket(wsURI);
 var selectedChannel;
 
 var main = new UI.Card({
-    title: ' SignalK app',
-    icon: 'images/paperboat.png',
+    title: ' SignalK',
+    icon: 'images/SignalK.png',
     subtitle: '',
-    body: 'Listens to ' + wsURI + '\nPress SELECT ->\nto start.\nDOWN for About ->'
+    body: 'Listens to ' + wsURI + '.',
+    action: {
+        select: 'images/music_icon_play.png',
+        down: 'images/music_icon_ellipsis.png'
+    }
 });
 
 main.show();
@@ -92,6 +96,92 @@ var setData = function(top, value, unit, desc) {
     unitTextfield.text(unit);
 };
 
+var findInArray = function(array, key) {
+    var value;
+    for (var i=0; i<array.length; i++) {
+        if (array[i].path === key) {
+            value = array[i].value;
+            break;
+        }
+    }
+    return value;
+};
+
+var toDegrees = function(angle) {
+    return angle * (180 / Math.PI);
+};
+
+var msToKnots = function(ms) {
+    return ms * 3600 / 1852;
+};
+
+
+var dataExtractor = function(payload, key) {
+    if (payload.updates !== undefined) {
+        if (payload.updates[0].values !== undefined) {
+            switch (key) {
+                case 'bsp':
+                    var bsp = findInArray(payload.updates[0].values, 'navigation.speedThroughWater');
+                    return msToKnots(bsp);
+                case 'hdg':
+                    var hdg = findInArray(payload.updates[0].values, 'navigation.headingMagnetic');
+                    hdg = toDegrees(hdg);
+                    return hdg;
+                case 'dbt':
+                    var dbt = findInArray(payload.updates[0].values, 'environment.depth.belowTransducer');
+                    return dbt;
+                case 'sog':
+                    var sog = findInArray(payload.updates[0].values, 'navigation.speedOverGround');
+                    return msToKnots(sog);
+                case 'cog':
+                    var cog = findInArray(payload.updates[0].values, 'navigation.courseOverGroundTrue');
+                    return toDegrees(cog);
+                case 'twa':
+                    var twa = findInArray(payload.updates[0].values, 'environment.wind.angleTrueWater');
+                    return toDegrees(twa);
+                case 'tws':
+                    var tws = findInArray(payload.updates[0].values, 'environment.wind.speedTrue');
+                    return msToKnots(tws);
+                case 'cdr':
+                    var current = findInArray(payload.updates[0].values, 'environment.current');
+                    if (current !== undefined) {
+                        var cdr = current.setTrue;
+                        return toDegrees(cdr);
+                    }
+                    break;
+                case 'csp':
+                    var current = findInArray(payload.updates[0].values, 'environment.current');
+                    if (current !== undefined) {
+                        var csp = current.drift;
+                        return msToKnots(csp);
+                    }
+                    break;
+                case 'vmg':
+                    var vmg = findInArray(payload.updates[0].values, 'performance.velocityMadeGood');
+                    return msToKnots(vmg);
+                case 'wtemp':
+                    var wtemp = findInArray(payload.updates[0].values, 'environment.water.temperature');
+                    if (wtemp !== undefined) {
+                        wtemp -= 273.6; // Kelvins
+                        return wtemp;
+                    }
+                    break;
+                case 'awa':
+                case 'aws':
+                case 'atemp':
+                case 'dwp':
+                case 'prmsl':
+                case 'hum':
+                case 'cmg':
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    return null;
+};
+
 var displayData = function(payload) {
     var card = dataWind; // new UI.Card();
     if (card !== undefined) {
@@ -99,8 +189,9 @@ var displayData = function(payload) {
         if (selectedChannel !== undefined) {
             if (!inSelect) {
                 // payload['member'] => payload[channels[index].member].toFixed(channels[index].nbd)
-                if (payload[selectedChannel.member]) {
-                    display = payload[selectedChannel.member].toFixed(selectedChannel.nbd);
+                var value = dataExtractor(payload, selectedChannel.member);
+                if (value) {
+                    display = value.toFixed(selectedChannel.nbd);
                 } else {
                     display = '...';
                 }
@@ -124,7 +215,7 @@ ws.onopen = function() {
         }]
     };
     var subscriptionMessage = JSON.stringify(subscriptionObject);
-    console.log("Sending subscription:" + subscriptionMessage)
+    console.log("Sending subscription:" + subscriptionMessage);
     ws.send(subscriptionMessage); // Subscribe
 };
 
@@ -289,11 +380,11 @@ main.on('click', 'up', function(e) {
 main.on('click', 'down', function(e) {
     console.log('Main DOWN');
     var about = new UI.Card({
-        title: ' about OlivSoft',
+        title: 'SignalK client',
         subtitle: '',
         icon: 'images/paperboat.png',
         scrollable: true,
-        body: 'Works on WebSocket SignalK Server possibly running onboard.'
+        body: 'Works on WebSocket SignalK Server, possibly running on board.'
     });
     about.on('click', 'back', function(e) {
         about.hide();

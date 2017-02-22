@@ -186,6 +186,12 @@
         <td><div id="aws"/></td>
         <td><div id="awa"/></td>
     </tr>
+    <tr>
+        <th>BSP</th>
+    </tr>
+    <tr>
+        <td><div id="bsp"/></td>
+    </tr>
 </table>
 </body>
 
@@ -222,6 +228,7 @@
     var wtempDiv = document.getElementById('wtemp');
     var awsDiv = document.getElementById('aws');
     var awaDiv = document.getElementById('awa');
+    var bspDiv = document.getElementById('bsp');
 
     var findInArray = function(array, key) {
         var value;
@@ -239,7 +246,7 @@
     };
 
     var msToKnots = function(ms) {
-      return ms * 3600 / 1852;
+        return ms * 3600 / 1852;
     };
 
     var sexToDec = function (deg, min) {
@@ -297,7 +304,7 @@
                             var tws = findInArray(data.updates[0].values, 'environment.wind.speedTrue');
                             var twa = findInArray(data.updates[0].values, 'environment.wind.angleTrueWater');
                             twa = toDegrees(twa);
-                            twsDiv.innerHTML = tws.toFixed(2);
+                            twsDiv.innerHTML = msToKnots(tws).toFixed(2);
                             twaDiv.innerHTML = twa.toFixed(0);
                             break;
                         case "VDR": // Set and Drift
@@ -311,7 +318,7 @@
                             }
                         case "VPW": // VMG
                             var vmg = findInArray(data.updates[0].values, 'performance.velocityMadeGood');
-                            vmgDiv.innerHTML = vmg.toFixed(2);
+                            vmgDiv.innerHTML = msToKnots(vmg).toFixed(2);
                             break;
                         case "RMC":
                             var pos = findInArray(data.updates[0].values, 'navigation.position');
@@ -347,6 +354,9 @@
                             var hdg = findInArray(data.updates[0].values, 'navigation.headingMagnetic');
                             hdg = toDegrees(hdg);
                             hdgDiv.innerHTML = hdg.toFixed(0);
+                            var bsp = findInArray(data.updates[0].values, 'navigation.speedThroughWater');
+                            bsp = msToKnots(bsp);
+                            bspDiv.innerHTML = bsp.toFixed(2);
                             break;
                         case "VWR":
                             var aws = findInArray(data.updates[0].values, 'environment.wind.speedApparent');
