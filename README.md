@@ -20,7 +20,7 @@ Several reusable samples, with Pebble JS.
 
 Featuring:
 
-- [A Sheep Counter](https://github.com/OlivierLD/pebble/tree/master/Counter.app)
+- [A Sheep Counter](https://github.com/OlivierLD/pebble/tree/master/Counter)
     - A 2-page application
     - Action bar (Up, Down, Select)
     - Custom menu icon
@@ -28,10 +28,10 @@ Featuring:
     - GPS Location (Position, Heading, Speed)
     - Configuration
     - Shake to reset
-- [A REST client](https://github.com/OlivierLD/pebble/tree/master/REST.app) 
+- [A REST client](https://github.com/OlivierLD/pebble/tree/master/REST)
     - REST Client
     - Configuration
-- [An NMEA Application](https://github.com/OlivierLD/pebble/tree/master/NMEA.app)
+- [An NMEA Application](https://github.com/OlivierLD/pebble/tree/master/NMEA)
     - WebSocket client
     - Configuration
     - Menu Usage
@@ -43,3 +43,5 @@ Featuring:
     - Action Bar
     - Dynamic menu
     - Image display
+- etc
+

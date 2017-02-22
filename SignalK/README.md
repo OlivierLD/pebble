@@ -8,7 +8,8 @@ This also starts a WebSocket server, its URL is ws://localhost/signalk/v1/stream
 
 The Pebble app uses this connection to read the data produced by SignalK.
 
-The connction above is to be set in the Settings.
+The connection above is to be set in the Settings.
+
 ![Configuration](./config.png)
 
 ![Main](./01.png) ![Second](./02.png) etc...
