@@ -10,7 +10,7 @@ var Vector2 = require('vector2');
 
 var wsURI = Settings.option('wsuri'); // Get the URL from a config...  ws://192.168.1.176/signalk/v1/stream
 if (wsURI === undefined) {
-    wsURI = 'ws://192.168.1.1/signalk/v1/stream';
+    wsURI = 'ws://192.168.1.1:3000/signalk/v1/stream';
 }
 
 Settings.config(
@@ -30,7 +30,9 @@ Settings.config(
     }
 );
 
+console.log('Connecting to ' + wsURI);
 var ws = new WebSocket(wsURI);
+
 var selectedChannel;
 
 var main = new UI.Card({
@@ -114,7 +116,6 @@ var toDegrees = function(angle) {
 var msToKnots = function(ms) {
     return ms * 3600 / 1852;
 };
-
 
 var dataExtractor = function(payload, key) {
     if (payload.updates !== undefined) {
@@ -208,6 +209,7 @@ var displayData = function(payload) {
 };
 
 ws.onopen = function() {
+    console.log('Connection established');
     var subscriptionObject = {
         "context": "vessels.self",
         "subscribe": [{
@@ -221,7 +223,12 @@ ws.onopen = function() {
 
 ws.onmessage = function (event) {
     var payload = JSON.parse(event.data);
+    console.log('Received ', payload);
     displayData(payload);
+};
+
+ws.onclose = function() {
+    console.log("ws close");
 };
 
 /*
@@ -382,7 +389,7 @@ main.on('click', 'down', function(e) {
     var about = new UI.Card({
         title: 'SignalK client',
         subtitle: '',
-        icon: 'images/paperboat.png',
+        icon: 'images/SignalK.png',
         scrollable: true,
         body: 'Works on WebSocket SignalK Server, possibly running on board.'
     });
