@@ -20,6 +20,30 @@ The connection above is to be set in the Settings.
 
 ![Configuration](./config.png)
 
-![Menu](./00.png) ![Main](./01.png) ![Second](./02.png) ![Third](./03.png)etc...
+<table style="background-color: LightGray; text-align: center;">
+  <tr>
+    <td style="border: 1px solid #CCC; border-radius: 5px; padding: 3px;">
+      Application list
+      <br/>
+      <img src="00.png" alt="App Menu">
+    </td>
+    <td style="border: 1px solid #CCC; border-radius: 5px; padding: 3px;">
+      Start here
+      <br/>
+      <img src="01.png" alt="Start here">
+    </td>
+    <td style="border: 1px solid #CCC; border-radius: 5px; padding: 3px;">
+      Data picker
+      <br/>
+      <img src="02.png" alt="Choose your data">
+    </td>
+    <td style="border: 1px solid #CCC; border-radius: 5px; padding: 3px;">
+      Displayed
+      <br/>
+      <img src="03.png" alt="Displayed!">
+    </td>
+  </tr>
+</table>
+
 
 ---
