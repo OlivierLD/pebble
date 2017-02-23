@@ -334,7 +334,7 @@ var channels = [ { chan: 'BSP',
 // icon: 'images/paperboat.png',
 
 var menuItems = [{
-    title: 'NMEA calculate',
+    title: 'NMEA Data',
     subtitle: 'Choose the data'
 }];
 
