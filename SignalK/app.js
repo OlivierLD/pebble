@@ -8,7 +8,7 @@ var Settings = require('settings'); // See https://pebble.github.io/pebblejs/#se
 var UI = require('ui');
 var Vector2 = require('vector2');
 
-var wsURI = Settings.option('wsuri'); // Get the URL from a config...  ws://192.168.1.176/signalk/v1/stream
+var wsURI = Settings.option('wsuri'); // Get the URL from a config...  ws://192.168.1.176:3000/signalk/v1/stream
 if (wsURI === undefined) {
     wsURI = 'ws://192.168.1.177:3000/signalk/v1/stream';
 }
@@ -93,7 +93,11 @@ dataWind.add(unitTextfield);
 
 var setData = function(top, value, unit, desc) {
     topTextfield.text(top);
-    dataTextfield.text(value);
+    if (value === '...' && dataTextfield.text === '') {
+        dataTextfield.text(value);
+    } else if (value !== '...') {
+        dataTextfield.text(value);
+    }
     descTextfield.text(desc);
     unitTextfield.text(unit);
 };
@@ -168,7 +172,11 @@ var dataExtractor = function(payload, key) {
                     }
                     break;
                 case 'awa':
+                    var awa = findInArray(payload.updates[0].values, 'environment.wind.angleApparent');
+                    return toDegrees(awa);
                 case 'aws':
+                    var aws = findInArray(payload.updates[0].values, 'environment.wind.speedApparent');
+                    return msToKnots(aws);
                 case 'atemp':
                 case 'dwp':
                 case 'prmsl':
@@ -204,6 +212,12 @@ var getTWA = function(payload) {
 var getTWS = function(payload) {
     return dataExtractor(payload, 'tws');
 };
+var getAWA = function(payload) {
+    return dataExtractor(payload, 'awa');
+};
+var getAWS = function(payload) {
+    return dataExtractor(payload, 'aws');
+};
 var getCDR = function(payload) {
     return dataExtractor(payload, 'cdr');
 };
@@ -220,7 +234,6 @@ var notImplemented = function(payload) {
     return '...';
 };
 
-
 var displayData = function(payload) {
     var card = dataWind; // new UI.Card();
     if (card !== undefined) {
@@ -230,14 +243,14 @@ var displayData = function(payload) {
                 var value =  selectedChannel.parser(payload);
                 if (value && value !== '...') {
                     display = value.toFixed(selectedChannel.nbd);
-                    setData(selectedChannel.chan,
-                        display,
-                        selectedChannel.unit,
-                        selectedChannel.desc);
-                    dataWind.show();
                 } else {
                     display = '...';
                 }
+                setData(selectedChannel.chan,
+                    display,
+                    selectedChannel.unit,
+                    selectedChannel.desc);
+                dataWind.show();
             }
         } else {
             console.log(display);
@@ -300,12 +313,12 @@ var channels = [
         unit: 'degrees °' },
     { chan: 'AWA',
         desc: 'Apparent Wind Angle',
-        parser: notImplemented,
+        parser: getAWA,
         nbd: 0,
         unit: 'degrees °' },
     { chan: 'AWS',
         desc: 'Apparent Wind Speed',
-        parser: notImplemented,
+        parser: getAWS,
         nbd: 2,
         unit: 'knots' },
     { chan: 'TWA',
