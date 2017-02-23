@@ -4,7 +4,7 @@ Start the SignalK server
 ```bash
  $> bin/nmea-from-tcp
 ```
-This also starts a WebSocket server, its URL is ws://localhost:3000/signalk/v1/stream.
+This also starts a WebSocket server, its URL is `ws://localhost:3000/signalk/v1/stream`.
 
 You can see this URL from any REST client (PostMan, your browser), by issuing to the SignalK server a request like
 ```
