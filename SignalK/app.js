@@ -10,7 +10,7 @@ var Vector2 = require('vector2');
 
 var wsURI = Settings.option('wsuri'); // Get the URL from a config...  ws://192.168.1.176/signalk/v1/stream
 if (wsURI === undefined) {
-    wsURI = 'ws://10.0.7.159:3000/signalk/v1/stream';
+    wsURI = 'ws://192.168.1.177:3000/signalk/v1/stream';
 }
 
 Settings.config(
