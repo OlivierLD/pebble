@@ -10,7 +10,7 @@ var Vector2 = require('vector2');
 
 var wsURI = Settings.option('wsuri'); // Get the URL from a config...  ws://192.168.1.176/signalk/v1/stream
 if (wsURI === undefined) {
-    wsURI = 'ws://192.168.1.1:3000/signalk/v1/stream';
+    wsURI = 'ws://10.0.7.159:3000/signalk/v1/stream';
 }
 
 Settings.config(
@@ -163,7 +163,7 @@ var dataExtractor = function(payload, key) {
                 case 'wtemp':
                     var wtemp = findInArray(payload.updates[0].values, 'environment.water.temperature');
                     if (wtemp !== undefined) {
-                        wtemp -= 273.6; // Kelvins
+                        wtemp -= 273.6; // Kelvin to Celcius
                         return wtemp;
                     }
                     break;
@@ -189,18 +189,17 @@ var displayData = function(payload) {
         var display = "No channel selected yet.";
         if (selectedChannel !== undefined) {
             if (!inSelect) {
-                // payload['member'] => payload[channels[index].member].toFixed(channels[index].nbd)
                 var value = dataExtractor(payload, selectedChannel.member);
                 if (value) {
                     display = value.toFixed(selectedChannel.nbd);
+                    setData(selectedChannel.chan,
+                        display,
+                        selectedChannel.unit,
+                        selectedChannel.desc);
+                    dataWind.show();
                 } else {
                     display = '...';
                 }
-                setData(selectedChannel.chan,
-                    display,
-                    selectedChannel.unit,
-                    selectedChannel.desc);
-                dataWind.show();
             }
         } else {
             console.log(display);
