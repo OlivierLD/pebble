@@ -144,16 +144,16 @@ var dataExtractor = function(payload, key) {
                     var tws = findInArray(payload.updates[0].values, 'environment.wind.speedTrue');
                     return msToKnots(tws);
                 case 'cdr':
-                    var current = findInArray(payload.updates[0].values, 'environment.current');
-                    if (current !== undefined) {
-                        var cdr = current.setTrue;
+                    var current1 = findInArray(payload.updates[0].values, 'environment.current');
+                    if (current1 !== undefined) {
+                        var cdr = current1.setTrue;
                         return toDegrees(cdr);
                     }
                     break;
                 case 'csp':
-                    var current = findInArray(payload.updates[0].values, 'environment.current');
-                    if (current !== undefined) {
-                        var csp = current.drift;
+                    var current2 = findInArray(payload.updates[0].values, 'environment.current');
+                    if (current2 !== undefined) {
+                        var csp = current2.drift;
                         return msToKnots(csp);
                     }
                     break;
@@ -183,14 +183,52 @@ var dataExtractor = function(payload, key) {
     return null;
 };
 
+var getBSP = function(payload) {
+  return dataExtractor(payload, 'bsp');
+};
+var getHDG = function(payload) {
+    return dataExtractor(payload, 'hdg');
+};
+var getDBT = function(payload) {
+    return dataExtractor(payload, 'dbt');
+};
+var getSOG = function(payload) {
+    return dataExtractor(payload, 'sog');
+};
+var getCOG = function(payload) {
+    return dataExtractor(payload, 'cog');
+};
+var getTWA = function(payload) {
+    return dataExtractor(payload, 'twa');
+};
+var getTWS = function(payload) {
+    return dataExtractor(payload, 'tws');
+};
+var getCDR = function(payload) {
+    return dataExtractor(payload, 'cdr');
+};
+var getCSP = function(payload) {
+    return dataExtractor(payload, 'csp');
+};
+var getVMG = function(payload) {
+    return dataExtractor(payload, 'vmg');
+};
+var getWTEMP = function(payload) {
+    return dataExtractor(payload, 'wtemp');
+};
+var notImplemented = function(payload) {
+    return '...';
+};
+
+
 var displayData = function(payload) {
     var card = dataWind; // new UI.Card();
     if (card !== undefined) {
         var display = "No channel selected yet.";
         if (selectedChannel !== undefined) {
             if (!inSelect) {
-                var value = dataExtractor(payload, selectedChannel.member);
-                if (value) {
+                var value =  selectedChannel.parser(payload);
+                if (value && value !== '...') {
                     display = value.toFixed(selectedChannel.nbd);
                     setData(selectedChannel.chan,
                         display,
@@ -231,103 +269,103 @@ ws.onclose = function() {
 };
 
 /*
- * in the payload, use 'member' to get the value:
- * payload['member'] => payload[channels[index].member].toFixed(channels[index].nbd)
- * This is an abstraction layer on top of the data returned by the app running on on RasPI.
+ * in the payload, use 'parser' to get the value:
+ * This is an abstraction layer on top of the data returned by SignalK.
  */
-var channels = [ { chan: 'BSP',
-    desc: 'Boat Speed',
-    member: 'bsp',
-    nbd: 2,
-    unit: 'knots' },
+var channels = [
+    { chan: 'BSP',
+        desc: 'Boat Speed',
+        parser: getBSP,
+        nbd: 2,
+        unit: 'knots' },
     { chan: 'HDG',
         desc: 'Heading',
-        member: 'hdg',
+        parser: getHDG,
         nbd: 0,
         unit: 'degrees °' },
     { chan: 'DBT',
         desc: 'Depth Below Transducer',
-        member: 'dbt',
+        parser: getDBT,
         nbd: 2,
         unit: 'meters' },
     { chan: 'SOG',
         desc: 'Speed Over Ground',
-        member: 'sog',
+        parser: getSOG,
         nbd: 2,
         unit: ' knots' },
     { chan: 'COG',
         desc: 'Course Over Ground',
-        member: 'cog',
+        parser: getCOG,
         nbd: 0,
         unit: 'degrees °' },
     { chan: 'AWA',
         desc: 'Apparent Wind Angle',
-        member: 'awa',
+        parser: notImplemented,
         nbd: 0,
         unit: 'degrees °' },
     { chan: 'AWS',
         desc: 'Apparent Wind Speed',
-        member: 'aws',
+        parser: notImplemented,
         nbd: 2,
         unit: 'knots' },
     { chan: 'TWA',
         desc: 'True Wind Angle',
-        member: 'twa',
+        parser: getTWA,
         nbd: 0,
         unit: 'degrees °' },
     { chan: 'TWD',
         desc: 'True Wind Direction',
-        member: 'twd',
+        parser: notImplemented,
         nbd: 0,
         unit: 'degrees °' },
     { chan: 'TWS',
         desc: 'True Wind Speed',
-        member: 'tws',
+        parser: getTWS,
         nbd: 2,
         unit: 'knots' },
     { chan: 'VMG',
         desc: 'Velocity Made Good',
-        member: 'vmg',
+        parser: getVMG,
         nbd: 2,
         unit: 'knots' },
     { chan: 'CSP',
         desc: 'Current Speed',
-        member: 'csp',
+        parser: getCSP,
         nbd: 2,
         unit: 'knots' },
     { chan: 'CDR',
         desc: 'Current Direction',
-        member: 'cdr',
+        parser: getCDR,
         nbd: 0,
         unit: 'degrees °' },
     { chan: 'CMG',
         desc: 'Course Made Good',
-        member: 'cmg',
+        parser: notImplemented,
         nbd: 0,
         unit: 'degrees °' },
     { chan: 'DWP',
         desc: 'Distance to Waypoint',
-        member: 'dwp',
+        parser: notImplemented,
         nbd: 2,
         unit: 'nm' },
     { chan: 'PRMSL',
         desc: 'Pressure at Mean Sea Level',
-        member: 'prmsl',
+        parser: notImplemented,
         nbd: 1,
         unit: 'hPa' },
     { chan: 'WTMP',
         desc: 'Water Temperature',
-        member: 'wtemp',
+        parser: getWTEMP,
         nbd: 1,
         unit: '°C' },
     { chan: 'ATMP',
         desc: 'Air Temperature',
-        member: 'atemp',
+        parser: notImplemented,
         nbd: 1,
         unit: '°C' },
     { chan: 'HUM',
         desc: 'Relative Humidity',
-        member: 'hum',
+        parser: notImplemented,
         nbd: 1,
         unit: '%' }];
 

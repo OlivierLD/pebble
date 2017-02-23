@@ -1,4 +1,4 @@
-## WebSocket client for SignalK
+## Pebble WebSocket client for SignalK
 
 Start the SignalK server
 ```bash
@@ -27,17 +27,17 @@ The connection above is to be set in the Settings.
       <br/>
       <img src="00.png" alt="App Menu">
     </td>
-    <td style="border: 1px solid #CCC; border-radius: 5px; padding: 3px;background-color: LightGray; text-align: center;">
+    <td style="border: 1px solid #CCC; border-radius: 5px; padding: 3px; background-color: LightGray; text-align: center;">
       Start here
       <br/>
       <img src="01.png" alt="Start here">
     </td>
-    <td style="border: 1px solid #CCC; border-radius: 5px; padding: 3px;background-color: LightGray; text-align: center;">
+    <td style="border: 1px solid #CCC; border-radius: 5px; padding: 3px; background-color: LightGray; text-align: center;">
       Data picker
       <br/>
       <img src="02.png" alt="Choose your data">
     </td>
-    <td style="border: 1px solid #CCC; border-radius: 5px; padding: 3px;background-color: LightGray; text-align: center;">
+    <td style="border: 1px solid #CCC; border-radius: 5px; padding: 3px; background-color: LightGray; text-align: center;">
       Displayed
       <br/>
       <img src="03.png" alt="Displayed!">
