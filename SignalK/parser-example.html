@@ -135,6 +135,10 @@
             border-radius: 5px;
             padding: 3px;
         }
+
+        td {
+            text-align: right;
+        }
     </style>
 </head>
 <body>
@@ -320,7 +324,9 @@
                             }
                         case "VPW": // VMG
                             var vmg = findInArray(data.updates[0].values, 'performance.velocityMadeGood');
-                            vmgDiv.innerHTML = msToKnots(vmg).toFixed(2);
+                            if (vmg !== undefined) {
+                                vmgDiv.innerHTML = msToKnots(vmg).toFixed(2);
+                            }
                             break;
                         case "RMC":
                             var pos = findInArray(data.updates[0].values, 'navigation.position');
