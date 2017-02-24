@@ -130,8 +130,7 @@ var dataExtractor = function(payload, key) {
                     return msToKnots(bsp);
                 case 'hdg':
                     var hdg = findInArray(payload.updates[0].values, 'navigation.headingMagnetic');
-                    hdg = toDegrees(hdg);
-                    return hdg;
+                    return toDegrees(hdg);
                 case 'dbt':
                     var dbt = findInArray(payload.updates[0].values, 'environment.depth.belowTransducer');
                     return dbt;
