@@ -8,21 +8,24 @@ var Settings = require('settings'); // See https://pebble.github.io/pebblejs/#se
 var UI = require('ui');
 var Vector2 = require('vector2');
 
-var wsURI = Settings.option('wsuri'); // Get the URL from a config...  ws://192.168.1.176:3000/signalk/v1/stream
-if (wsURI === undefined) {
-    wsURI = 'ws://192.168.1.177:3000/signalk/v1/stream';
-}
+var machine = Settings.option('wsuri');
+var port = Settings.option('wsport');
+
+var wsURI = 'ws://' + machine + ':' + (port !== undefined ? port : '3000') + '/signalk/v1/stream'; // Get the URL from a config...  ws://192.168.1.176:3000/signalk/v1/stream
 
 Settings.config(
     { url: 'http://lediouris.net/pebble/SignalK.app.html' },
     function(e) { // OnOpen
         console.log('opening configurable:', JSON.stringify(e));
         // Reset wsuri before opening the webview
-//  Settings.option({wsuri: wsURI});
-        Settings.option('wsuri', wsURI);
+//      Settings.option({wsuri: wsURI});
+        Settings.option('wsuri', machine);
+        Settings.option('wsport', port);
     },
     function(e) { // OnClose. If the app is running, restart it.
-        wsURI = Settings.option('wsuri');
+        machine = Settings.option('wsuri');
+        port = Settings.option('wsport');
+        wsURI = 'ws://' + machine + ':' + (port !== undefined ? port : '3000') + '/signalk/v1/stream'; // Get the URL from a config...  ws://192.168.1.176:3000/signalk/v1/stream
         console.log('closed configurable, wsURI:', wsURI);
         if (e.failed === true) {
             console.log("Failed:" + JSON.stringify(e));
