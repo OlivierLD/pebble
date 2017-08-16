@@ -8,3 +8,6 @@ Action Bar
 Several screens
 
 Analog to the SignalK project, structure wise.
+
+Welcome Screen -> Logging On/Off (action bar up/down) Select leads to Display data.
+-> Display data + Action Bar to Reset/Terminate
