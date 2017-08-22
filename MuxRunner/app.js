@@ -8,6 +8,18 @@ var Vector2 = require('vector2');
 
 var resturl = Settings.option('resturl');
 
+var HTTP_OK = 200;
+var HTTP_OK_NO_CONTENT = 201;
+var HTTP_BAD_REQUEST = 400;
+var HTTP_NOT_FOUND = 404;
+var HTTP_FORBIDDEN = 403;
+
+var XHR_NOT_INITIALIZED = 0;
+var XHR_CONNECTION_ESTABLISHED = 1;
+var XHR_REQUEST_RECEIVED = 0;
+var XHR_PROCESSING_REQUEST = 3;
+var XHR_FINISHED_RESPONSE_READY = 4;
+
 Settings.config(
     { url: 'http://lediouris.net/pebble/MuxRunner.app.html' },
     function(e) { // OnOpen
@@ -25,16 +37,20 @@ Settings.config(
     }
 );
 
+var xhr;
+
 if (resturl === undefined) {
-  resturl = '192.168.42.1';
+  resturl = 'http://192.168.42.1:9999';
 }
 console.log('Connecting to ' + resturl);
+
+var ON_OFF_RESOURCE = "/mux-process"; // GET, PUT
 
 var main = new UI.Card({
   title: ' Runner',
   icon: 'images/runner_23x25.png',
-  subtitle: '',
-  body: 'Ping ' + resturl + '.\n' + 'Up: on\nDown: off\nSelect: Display',
+  subtitle: 'Logging ?',
+  body: /*'Ping ' + resturl + '.\n' + */ 'Up: on\nDown: off\nSelect: Display',
   action: {
     up: 'images/action_bar_icon_check.png',
     select: 'images/music_icon_play.png',
@@ -44,31 +60,79 @@ var main = new UI.Card({
 
 main.show();
 
+var getLoggingStatus = function() {
+    console.log("Getting logging status.");
+    var url = resturl + ON_OFF_RESOURCE;
+    xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XHR_FINISHED_RESPONSE_READY && xhr.status === HTTP_OK) {
+            console.log("XHR returned", xhr.responseText);
+            if (main !== undefined) {
+                var card = main; // new UI.Card();
+                var resp = JSON.parse(xhr.responseText);
+                if (resp !== undefined && resp.value !== undefined) {
+                    card.subtitle('Logging is ' + resp.value);
+                    card.show();
+                }
+            }
+        } else {
+            console.log("XHR: State:", xhr.status, " RS:", xhr.readyState);
+        }
+    };
+    xhr.open("GET", url, true);
+    xhr.send();
+    console.log("GET request has been sent");
+};
+
+/**
+ *
+ * @param position on or off
+ */
+var setLoggingStatus = function(position) {
+    console.log("Setting logging " + position);
+    var url = resturl + ON_OFF_RESOURCE + '/' + position;
+    xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XHR_FINISHED_RESPONSE_READY && xhr.status === HTTP_OK) {
+            console.log("XHR returns", xhr.responseText);
+            if (main !== undefined) {
+                var card = main; // new UI.Card();
+                var resp = JSON.parse(xhr.responseText);
+                if (resp !== undefined && resp.value !== undefined) {
+                    card.subtitle('Logging ' + resp.value);
+                    card.show();
+                }
+            }
+        } else {
+            console.log("XHR: State:", xhr.status, " RS:", xhr.readyState);
+        }
+    };
+    xhr.open("PUT", url, true);
+    // xhr.setRequestHeader("Content-type", "application/json");
+    // xhr.setRequestHeader("X-AIO-Key", key);
+    // var data = { "value": position };
+    xhr.send(); // JSON.stringify(data));
+    console.log("Logging has been set");
+};
+
+// Get status on start
+getLoggingStatus();
+
 main.on('click', 'up', function(e) {
-  var menu = new UI.Menu({
-    sections: [{
-      items: [{
-        title: 'Pebble.js',
-        icon: 'images/menu_icon.png',
-        subtitle: 'Can do Menus'
-      }, {
-        title: 'Second Item',
-        subtitle: 'Subtitle Text'
-      }, {
-        title: 'Third Item',
-      }, {
-        title: 'Fourth Item',
-      }]
-    }]
-  });
-  menu.on('select', function(e) {
-    console.log('Selected item #' + e.itemIndex + ' of section #' + e.sectionIndex);
-    console.log('The item is titled "' + e.item.title + '"');
-  });
-  menu.show();
+  // Turn logging ON
+  setLoggingStatus('on');
+});
+
+main.on('click', 'down', function(e) {
+    // Turn logging OFF
+    setLoggingStatus('off');
 });
 
 main.on('click', 'select', function(e) {
+  // TODO Go to display data
+
   var wind = new UI.Window({
     backgroundColor: 'black'
   });
@@ -103,12 +167,4 @@ main.on('click', 'select', function(e) {
   wind.add(radial);
   wind.add(textfield);
   wind.show();
-});
-
-main.on('click', 'down', function(e) {
-  var card = new UI.Card();
-  card.title('A Card');
-  card.subtitle('Is a Window');
-  card.body('The simplest window type in Pebble.js.');
-  card.show();
 });
