@@ -8,17 +8,21 @@ var Vector2 = require('vector2');
 
 var resturl = Settings.option('resturl');
 
-var HTTP_OK = 200;
-var HTTP_OK_NO_CONTENT = 201;
-var HTTP_BAD_REQUEST = 400;
-var HTTP_NOT_FOUND = 404;
-var HTTP_FORBIDDEN = 403;
+var HTTP_STATUS = {
+  OK: 200,
+  OK_NO_CONTENT: 201,
+  BAD_REQUEST: 400,
+  NOT_FOUND: 404,
+  FORBIDDEN: 403
+};
 
-var XHR_NOT_INITIALIZED = 0;
-var XHR_CONNECTION_ESTABLISHED = 1;
-var XHR_REQUEST_RECEIVED = 0;
-var XHR_PROCESSING_REQUEST = 3;
-var XHR_FINISHED_RESPONSE_READY = 4;
+var XHR_STATUS = {
+  NOT_INITIALIZED: 0,
+  CONNECTION_ESTABLISHED: 1,
+  REQUEST_RECEIVED: 2,
+  PROCESSING_REQUEST: 3,
+  FINISHED_RESPONSE_READY: 4
+};
 
 Settings.config(
     { url: 'http://lediouris.net/pebble/MuxRunner.app.html' },
@@ -66,7 +70,7 @@ var getLoggingStatus = function() {
     xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function() {
-        if (xhr.readyState === XHR_FINISHED_RESPONSE_READY && xhr.status === HTTP_OK) {
+        if (xhr.readyState === XHR_STATUS.FINISHED_RESPONSE_READY && xhr.status === HTTP_STATUS.OK) {
             console.log("XHR returned", xhr.responseText);
             if (main !== undefined) {
                 var card = main; // new UI.Card();
@@ -95,7 +99,7 @@ var setLoggingStatus = function(position) {
     xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function() {
-        if (xhr.readyState === XHR_FINISHED_RESPONSE_READY && xhr.status === HTTP_OK) {
+        if (xhr.readyState === XHR_STATUS.FINISHED_RESPONSE_READY && xhr.status === HTTP_STATUS.OK) {
             console.log("XHR returns", xhr.responseText);
             if (main !== undefined) {
                 var card = main; // new UI.Card();
@@ -117,7 +121,7 @@ var setLoggingStatus = function(position) {
     console.log("Logging has been set");
 };
 
-// Get status on start
+// Get status on startup
 getLoggingStatus();
 
 main.on('click', 'up', function(e) {
