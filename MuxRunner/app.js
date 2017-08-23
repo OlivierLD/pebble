@@ -27,7 +27,7 @@ var XHR_STATUS = {
 Settings.config(
 		{ url: 'http://lediouris.net/pebble/MuxRunner.app.html' },
 		function(e) { // OnOpen
-			console.log('opening configurable:', JSON.stringify(e));
+			console.log('opening configurable:', JSON.stringify(e)); // TODO add units (for speed, distance and altitude).
 			Settings.option('resturl', resturl);
 		},
 		function(e) { // OnClose. If the app is running, restart it.
@@ -48,11 +48,11 @@ if (resturl === undefined) {
 console.log('Will use to ' + resturl);
 
 var ON_OFF_RESOURCE = "/mux-process"; // GET, PUT
-var RUN_DATA        = "/run-data"; // GET
-var CLEAR_CACHE     = "/cache"; // DELETE
+var RUN_DATA        = "/run-data";    // GET
+var CLEAR_CACHE     = "/cache";       // DELETE
 
 var dataCard = new UI.Card({
-	body: 'Display Data!!',
+	body: 'Display Data...', // Speed, Distance since reset, altitude
 	action: {
 		select: 'images/action_bar_icon_delete.png'
 	}
