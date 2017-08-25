@@ -44,7 +44,7 @@ if (refreshRate === undefined) {
 
 var main = new UI.Card({
   title: 'Connected',
-  icon: 'images/menu_icon.png',
+  icon: 'images/cloud.png',
   subtitle: 'Waiting for GPS...',
   body: 'Shake to Refresh',
   scrollable: true
