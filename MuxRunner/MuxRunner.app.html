@@ -77,7 +77,7 @@
           var opt = saveOptions();
           console.log("Submit:", saveOptions());
           var location = "pebblejs://close#" + encodeURIComponent(JSON.stringify(opt));
-          console.log("Warping to: " + location);
+          console.log("Wrapping to: " + location);
           console.log(location);
           document.location = location;
           alert('If your App is running,\nplease restart it.');
@@ -85,6 +85,7 @@
 
         // Set form values to whatever is passed in.
         console.log('Window location:' + window.location);
+//      alert('Window location:' + window.location);
         appendMess('0 - ' + window.location);
         try {
           var search = window.location.search;
@@ -104,6 +105,13 @@
           if (obj.resturl) {
             $('#rest-url').val(obj.resturl);
           }
+          if (obj.units) {
+	          $("#radio-" + obj.units).click(); // .prop("checked", true).button("refresh");
+	          $("#radio-" + obj.units).click(); // Why twice?...
+					} else {
+	          $("#radio-ms").click();
+	          $("#radio-ms").click();
+					}
         } catch (err) {
           console.log(err);
           appendMess('Err:' + err);

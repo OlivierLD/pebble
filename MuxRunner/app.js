@@ -86,8 +86,10 @@ Settings.config(
 		}
 );
 
-// Define the App's cards
-
+/*
+ * Define the App's cards
+ */
+// body: 'Display Data in ' + unitsMagicWand.speedUnit + ", " + unitsMagicWand.distUnit + " and " + unitsMagicWand.altUnit,
 var dataCard = new UI.Card({
 	body: 'Display Data...', // Speed, Distance since reset, altitude
 	action: {
@@ -238,15 +240,15 @@ var getRunData = function() {
 					var display = "";
 					// Distance
 					if (resp.dist !== undefined && resp.dist.distance !== undefined) {
-						display += ("D:" + (resp.dist.distance * unitsMagicWand.fromNM).toFixed(3) + " " + unitsMagicWand.distUnit);
+						display += ("Distance:\n" + (resp.dist.distance * unitsMagicWand.fromNM).toFixed(3) + " " + unitsMagicWand.distUnit);
 					}
 					// Speed
 					if (resp.sog !== undefined && resp.sog.sog !== undefined) {
-						display += ((display.length > 0 ? "\n" : "") + "Spd:" + (resp.sog.sog * unitsMagicWand.fromKts).toFixed(1) + " " + unitsMagicWand.speedUnit);
+						display += ((display.length > 0 ? "\n" : "") + "Speed:\n" + (resp.sog.sog * unitsMagicWand.fromKts).toFixed(1) + " " + unitsMagicWand.speedUnit);
 					}
 					// Delta Alt
 					if (resp.alt !== undefined && resp.alt["delta-altitude"] !== undefined) {
-						display += ((display.length > 0 ? "\n" : "") + "dAlt:" + (resp.alt["delta-altitude"] * unitsMagicWand.fromMeters).toFixed(1) + " " + unitsMagicWand.altUnit);
+						display += ((display.length > 0 ? "\n" : "") + "Delta Alt:\n" + (resp.alt["delta-altitude"] * unitsMagicWand.fromMeters).toFixed(1) + " " + unitsMagicWand.altUnit);
 					}
 					card.body(display);
 //				card.show();
@@ -291,6 +293,9 @@ main.on('click', 'down', function(e) {
 
 main.on('click', 'select', function(e) {
 	console.log('Displaying data...');
+	if (dataCard !== undefined) {
+		dataCard.body('Display Data in ' + unitsMagicWand.speedUnit + ", " + unitsMagicWand.distUnit + " and " + unitsMagicWand.altUnit);
+	}
 	// Loop on the run-data
 	interval = setInterval(getRunData, 1000);
 	// getRunData();
