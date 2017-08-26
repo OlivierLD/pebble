@@ -6,7 +6,7 @@ This project goes along with [this project](https://github.com/OlivierLD/raspber
 Provide the IP address of the Raspberry PI doing the logging, and the units you want to use.
 > Warning: This config is to be done _before_ you connect to the Raspberry PI network, the configuration page requires Internet access.
 
-![Config](./config.png)
+<img src="./config.png" width="360" height="640">
 
 #### Run it!
 Choose the item in the App menu on the watch. Make sure your phone is connected to the Raspberry PI network.
