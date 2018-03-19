@@ -4,5 +4,5 @@ Sample REST client application featuring
 - One landing page
 - One data page
 
-![One](./screen.01.png) ![One](./screen.02.png)
+![One](./screen.01.png) &nbsp;&nbsp;&nbsp; ![One](./screen.02.png)
 

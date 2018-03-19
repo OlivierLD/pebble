@@ -30,10 +30,10 @@ var URL = "http://donpedro.lediouris.net/php/weather/reports.v2/json.data.php?ty
 
 var main = new UI.Card({
 	title: ' Click!',
-	icon: 'images/cloud.png',
+	icon: 'images/partly-cloudy-rain.png',
 	body: 'Select to Refresh',
 	subtitleColor: 'indigo', // Named colors
-	bodyColor: '#9a0036', // Hex colors
+	bodyColor: '#9a0036',    // Hex colors
 	action: {
 		select: 'images/music_icon_play.png'
 	}
@@ -44,7 +44,7 @@ main.show();
 // New data window for the weather data
 var dataCard = new UI.Card({
 	backgroundColor: 'white',
-	body: 'Placeholder'
+	body: ' -- '
 });
 
 /**
@@ -97,7 +97,10 @@ var downloadData = function() {
 				}
 			}
 		} else {
-			console.log("XHR: State:", xhr.status, " RS:", xhr.readyState);
+			var errMess = "XHR: State:" + xhr.status + "\nRS:" + xhr.readyState;
+			console.log(errMess);
+			dataCard.body(errMess);
+			dataCard.show();
 		}
 	};
 	xhr.open("GET", url, true);
