@@ -36,7 +36,7 @@ You should be good to go!
       <img src="screenshot.02.png" alt="Choose the channel">
     </td>
     <td>
-      Srcoll...
+      Scroll...
       <br/>
       <img src="screenshot.03.png" alt="Channel list">
     </td>
