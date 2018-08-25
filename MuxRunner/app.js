@@ -1,5 +1,6 @@
 /**
  * Mux Runner Pebble client.
+ * Pure REST/XHR
  */
 
 var Settings = require('settings'); // See https://pebble.github.io/pebblejs/#settings
