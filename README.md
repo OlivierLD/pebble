@@ -3,8 +3,8 @@ Several reusable samples, with Pebble JS.
 
 ---
 
-Aug-2018. Pebble has been acquired by FitBit, and the online IDE seems not to be available anymore... Too bad, really.
-I'm not sure I want to by another watch, that requires a phone to talk to te get any external data.
+_Aug-2018_: Pebble has been acquired by FitBit a while back, and the online IDE seems not to be available anymore... Too bad, really.
+I'm not sure I want to by another watch, that requires a phone to talk to to get any external data.
 
 I'm looking forward to a watch that could use a TCP based protocol to get connected to a network.
 **That** would make sense.
