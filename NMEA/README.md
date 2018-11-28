@@ -10,12 +10,12 @@ A several page application showcasing:
 Copy the content of `app.js` in your [CloudPebble](https://cloudpebble.net/ide/) account.
 
 The config page `NMEA.app.html` is already deployed.
-You can modify this page, and deploy it to your own server. Just make sure its url is mentioned 
+You can modify this page, and deploy it to your own server. Just make sure its url is mentioned
 in the `url` member of the parameter sent to the `Settings.config` function in `app.js`.
 
 Configuring the app requires Internet access, make sure you configure it when you have some.
 Typically here, this app is designed to be used on board, when Internet access can be questionable.
-Make sure the watch is configured appropriately before you leave the dock. 
+Make sure the watch is configured appropriately before you leave the dock.
 
 In the `RESOURCES` section, add the `small.boat.png` file, name it `paperboat.png`, as mentionned in the code.
 
@@ -73,3 +73,5 @@ This app is a WebSocket client for the application described [here](http://www.l
 There is also a simulator in this very project, see [here](https://github.com/OlivierLD/pebble/tree/master/NMEA.data.simulator).
 
 All the data you want on your wrist, for less that $100!
+
+---
