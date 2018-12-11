@@ -1,4 +1,4 @@
-## Pebble REST client, used to reach an weather data
+## Pebble REST client, used to reach a weather data
 
 Sample REST client application featuring
 - One landing page
